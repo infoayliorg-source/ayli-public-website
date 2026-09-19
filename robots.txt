@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://infoayliorg-source.github.io/ayli-public-website/sitemap.xml
