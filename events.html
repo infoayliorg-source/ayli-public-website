@@ -1,0 +1,2222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Events | Africa Youth Leadership Institute
+    </title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        /* ==========================================
+           DYNAMIC EVENTS
+        =========================================== */
+
+        .dynamic-events-message {
+            text-align: center;
+            padding: 50px 20px;
+            color: #666;
+        }
+
+        .dynamic-events-message h3 {
+            margin-bottom: 10px;
+            color: #17202a;
+        }
+
+        .dynamic-event-image {
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .event-card-image {
+            width: 180px;
+            min-width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .event-card-content {
+            flex: 1;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 25px;
+            margin-top: 18px;
+        }
+
+        .event-meta span {
+            display: inline-block;
+        }
+
+        .event-action-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 11px 22px;
+            background: #c9a227;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .event-action-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .event-details-button {
+            display: inline-block;
+            margin-top: 20px;
+            margin-right: 10px;
+            padding: 11px 22px;
+            border: 1px solid #c9a227;
+            color: #c9a227;
+            background: transparent;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .event-details-button:hover {
+            background: #c9a227;
+            color: #ffffff;
+        }
+
+        /* ==========================================
+           EVENT MODAL
+        =========================================== */
+
+        .event-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.72);
+            padding: 30px 20px;
+            overflow-y: auto;
+        }
+
+        .event-modal.active {
+            display: block;
+        }
+
+        .event-modal-content {
+            width: 100%;
+            max-width: 850px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 35px;
+            position: relative;
+        }
+
+        .event-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            border: none;
+            background: transparent;
+            font-size: 30px;
+            cursor: pointer;
+            color: #333;
+            line-height: 1;
+        }
+
+        .event-modal-content h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .event-modal-category {
+            display: inline-block;
+            margin-bottom: 15px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #c9a227;
+        }
+
+        .event-modal-description {
+            line-height: 1.8;
+            color: #444;
+            white-space: pre-line;
+        }
+
+        .event-modal-meta {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f7f7f7;
+            border-radius: 6px;
+        }
+
+        .event-modal-meta p {
+            margin: 8px 0;
+        }
+
+        /* ==========================================
+           FEATURED EVENT DYNAMIC
+        =========================================== */
+
+        .featured-event-dynamic-card {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 30px;
+            align-items: stretch;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .featured-event-dynamic-date {
+            background: #17202a;
+            color: #ffffff;
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .featured-event-dynamic-date .date-label {
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .featured-event-dynamic-date strong {
+            font-size: 42px;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .featured-event-dynamic-date span:last-child {
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .featured-event-dynamic-content {
+            padding: 35px 35px 35px 0;
+        }
+
+        .featured-event-dynamic-content h3 {
+            margin-top: 8px;
+            margin-bottom: 15px;
+        }
+
+        .featured-event-dynamic-content p {
+            line-height: 1.7;
+        }
+
+        .featured-event-image {
+            width: 100%;
+            height: 100%;
+            min-height: 240px;
+            object-fit: cover;
+        }
+
+        /* ==========================================
+           RESPONSIVE
+        =========================================== */
+
+        @media (max-width: 800px) {
+
+            .featured-event-dynamic-card {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-event-dynamic-content {
+                padding: 30px;
+            }
+
+            .featured-event-dynamic-date {
+                padding: 30px;
+            }
+
+            .event-card-image {
+                width: 100%;
+                min-width: 0;
+                height: 220px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .event-modal-content {
+                padding: 25px 20px;
+            }
+
+            .event-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <header class="site-header">
+
+        <div class="header-container">
+
+
+            <a href="index.html" class="brand">
+
+                <img
+                    src="assets/logos/ayli-logo.png"
+                    alt="Africa Youth Leadership Institute Official Logo"
+                >
+
+                <div class="brand-text">
+
+                    <span class="brand-name">
+                        Africa Youth Leadership Institute
+                    </span>
+
+                    <span class="brand-tagline">
+                        Leadership • Service • Impact
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <nav class="main-navigation">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="leadership.html">
+                    Leadership
+                </a>
+
+                <a href="programs.html">
+                    Programs
+                </a>
+
+                <a href="cohorts.html">
+                    Cohorts
+                </a>
+
+                <a href="chapters.html">
+                    Chapters
+                </a>
+
+                <a href="alumni.html">
+                    Alumni
+                </a>
+
+                <a href="news.html">
+                    News
+                </a>
+
+                <a href="events.html" class="active">
+                    Events
+                </a>
+
+            </nav>
+
+
+            <a href="apply.html" class="header-apply-button">
+                Apply Now
+            </a>
+
+
+            <button
+                class="mobile-menu-button"
+                type="button"
+                aria-label="Open navigation menu"
+            >
+                ☰
+            </button>
+
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ==========================================
+         EVENTS HERO
+    =========================================== -->
+
+    <section class="events-page-hero">
+
+        <div class="events-page-hero-content">
+
+            <span class="section-label">
+                AYLI EVENTS
+            </span>
+
+            <h1>
+                Connecting Leaders Through Meaningful Events
+            </h1>
+
+            <p>
+                Discover leadership gatherings, academic activities,
+                conferences, webinars, retreats, graduations and
+                other activities organized by the Africa Youth
+                Leadership Institute.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         EVENTS INTRO
+    =========================================== -->
+
+    <section class="events-intro">
+
+        <div class="events-container">
+
+            <div class="events-intro-content">
+
+                <span class="section-label">
+                    THE AYLI EXPERIENCE
+                </span>
+
+                <h2>
+                    Events That Bring Our Leadership Community Together
+                </h2>
+
+                <p>
+                    Events are an important part of the AYLI experience.
+                    They create opportunities for students, alumni,
+                    leaders, partners and young people to connect,
+                    learn, exchange ideas and celebrate achievements.
+                </p>
+
+                <p>
+                    This page serves as the central events calendar
+                    for activities taking place across AYLI programs,
+                    chapters and the wider leadership community.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         FEATURED EVENT
+    =========================================== -->
+
+    <section class="featured-event">
+
+        <div class="events-container">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    FEATURED EVENT
+                </span>
+
+                <h2>
+                    AYLI Events & Activities
+                </h2>
+
+                <p>
+                    Important institutional activities and major
+                    AYLI events are highlighted here.
+                </p>
+
+            </div>
+
+
+            <div id="featuredEventContainer">
+
+                <div class="dynamic-events-message">
+
+                    <h3>
+                        Loading Event...
+                    </h3>
+
+                    <p>
+                        Please wait while AYLI events are loaded.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         UPCOMING EVENTS
+    =========================================== -->
+
+    <section class="upcoming-events">
+
+        <div class="events-container">
+
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    UPCOMING
+                </span>
+
+                <h2>
+                    Upcoming Events
+                </h2>
+
+                <p>
+                    Upcoming activities will be published here with
+                    their dates, locations and participation details.
+                </p>
+
+            </div>
+
+
+            <div
+                class="events-list"
+                id="upcomingEventsContainer"
+            >
+
+                <div class="dynamic-events-message">
+
+                    <h3>
+                        Loading Events...
+                    </h3>
+
+                    <p>
+                        Please wait while AYLI events are loaded.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         EVENT CATEGORIES
+    =========================================== -->
+
+    <section class="event-categories">
+
+        <div class="events-container">
+
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    EVENT CATEGORIES
+                </span>
+
+                <h2>
+                    Explore AYLI Events
+                </h2>
+
+                <p>
+                    Different types of events support the Institute's
+                    academic, leadership and community activities.
+                </p>
+
+            </div>
+
+
+            <div class="event-category-grid">
+
+
+                <div class="event-category-card">
+
+                    <span>
+                        01
+                    </span>
+
+                    <h3>
+                        Leadership Summits
+                    </h3>
+
+                    <p>
+                        Gatherings focused on leadership development,
+                        dialogue and collaboration.
+                    </p>
+
+                </div>
+
+
+                <div class="event-category-card">
+
+                    <span>
+                        02
+                    </span>
+
+                    <h3>
+                        Conferences
+                    </h3>
+
+                    <p>
+                        Platforms for discussion, networking,
+                        professional development and knowledge exchange.
+                    </p>
+
+                </div>
+
+
+                <div class="event-category-card">
+
+                    <span>
+                        03
+                    </span>
+
+                    <h3>
+                        Webinars
+                    </h3>
+
+                    <p>
+                        Online learning and leadership conversations
+                        connecting participants across Africa.
+                    </p>
+
+                </div>
+
+
+                <div class="event-category-card">
+
+                    <span>
+                        04
+                    </span>
+
+                    <h3>
+                        Retreats
+                    </h3>
+
+                    <p>
+                        Opportunities for reflection, leadership
+                        development, networking and community building.
+                    </p>
+
+                </div>
+
+
+                <div class="event-category-card">
+
+                    <span>
+                        05
+                    </span>
+
+                    <h3>
+                        Graduations
+                    </h3>
+
+                    <p>
+                        Celebrations recognizing the completion of
+                        AYLI programs and leadership journeys.
+                    </p>
+
+                </div>
+
+
+                <div class="event-category-card">
+
+                    <span>
+                        06
+                    </span>
+
+                    <h3>
+                        Chapter Activities
+                    </h3>
+
+                    <p>
+                        Activities and engagements organized through
+                        AYLI national chapters.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         GRADUATION EVENTS
+    =========================================== -->
+
+    <section class="graduation-events">
+
+        <div class="events-container">
+
+            <div class="graduation-events-grid">
+
+
+                <div class="graduation-events-content">
+
+                    <span class="section-label">
+                        MILESTONES
+                    </span>
+
+                    <h2>
+                        Celebrating Leadership Achievements
+                    </h2>
+
+                    <p>
+                        AYLI graduation ceremonies mark important
+                        milestones in the leadership journey of
+                        participants who complete their programs.
+                    </p>
+
+                    <p>
+                        Graduation information, presentation schedules,
+                        ceremony details and related announcements
+                        will be published through this platform.
+                    </p>
+
+                </div>
+
+
+                <div class="graduation-event-panel">
+
+                    <span>
+                        AYLI GRADUATION
+                    </span>
+
+                    <h3>
+                        Celebrating Every Leadership Journey
+                    </h3>
+
+                    <p>
+                        From learning to leadership, every completed
+                        journey represents another contribution to
+                        Africa's growing leadership community.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         PAST EVENTS
+    =========================================== -->
+
+    <section class="past-events">
+
+        <div class="events-container">
+
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    EVENT ARCHIVE
+                </span>
+
+                <h2>
+                    Past Events
+                </h2>
+
+                <p>
+                    Completed AYLI events, activities and major
+                    institutional milestones will be archived here.
+                </p>
+
+            </div>
+
+
+            <div
+                class="past-events-placeholder"
+                id="pastEventsContainer"
+            >
+
+                <div class="dynamic-events-message">
+
+                    <h3>
+                        Loading Event Archive...
+                    </h3>
+
+                    <p>
+                        Please wait while AYLI events are loaded.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         EVENTS CLOSING
+    =========================================== -->
+
+    <section class="events-closing">
+
+        <div class="events-closing-content">
+
+            <span class="section-label">
+                AFRICA YOUTH LEADERSHIP INSTITUTE
+            </span>
+
+            <h2>
+                Be Part of the Next AYLI Event.
+            </h2>
+
+            <p>
+                Stay connected with AYLI for upcoming programs,
+                leadership activities, events and opportunities
+                to engage.
+            </p>
+
+            <a
+                href="news.html"
+                class="events-closing-button"
+            >
+                View AYLI News
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         EVENT DETAILS MODAL
+    =========================================== -->
+
+    <div
+        class="event-modal"
+        id="eventModal"
+        aria-hidden="true"
+    >
+
+        <div class="event-modal-content">
+
+            <button
+                type="button"
+                class="event-modal-close"
+                id="eventModalClose"
+                aria-label="Close event details"
+            >
+                ×
+            </button>
+
+            <div id="eventModalBody"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         FOOTER
+    =========================================== -->
+
+    <footer class="site-footer">
+
+        <div class="footer-container">
+
+
+            <div class="footer-brand">
+
+                <img
+                    src="assets/logos/ayli-logo.png"
+                    alt="Africa Youth Leadership Institute Official Logo"
+                >
+
+                <h3>
+                    Africa Youth Leadership Institute
+                </h3>
+
+                <p>
+                    Developing young leaders for service,
+                    responsibility and positive impact.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    Explore
+                </h4>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="leadership.html">
+                    Leadership
+                </a>
+
+                <a href="programs.html">
+                    Programs
+                </a>
+
+                <a href="cohorts.html">
+                    Cohorts
+                </a>
+
+                <a href="chapters.html">
+                    Chapters
+                </a>
+
+                <a href="alumni.html">
+                    Alumni
+                </a>
+
+                <a href="news.html">
+                    News
+                </a>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    AYLI
+                </h4>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+                <a href="apply.html">
+                    Apply
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Africa Youth Leadership Institute.
+                All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ==========================================
+         SUPABASE + DYNAMIC EVENTS
+    =========================================== -->
+
+    <script>
+
+        const SUPABASE_URL =
+            "https://jutxahzlecbbphgxlouy.supabase.co";
+
+        const SUPABASE_KEY =
+            "sb_publishable_3e7SrhjXjF6haRM7yWIv3A_XRj-nlYk";
+
+
+        let supabaseClient;
+
+
+        /* ==========================================
+           LOAD SUPABASE
+        =========================================== */
+
+        function loadSupabase() {
+
+            return new Promise(function (resolve, reject) {
+
+                if (window.supabase) {
+
+                    resolve();
+
+                    return;
+
+                }
+
+
+                const script =
+                    document.createElement("script");
+
+                script.src =
+                    "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+
+                script.onload = function () {
+
+                    resolve();
+
+                };
+
+
+                script.onerror = function () {
+
+                    reject(
+                        new Error(
+                            "Failed to load Supabase."
+                        )
+                    );
+
+                };
+
+
+                document.head.appendChild(script);
+
+            });
+
+        }
+
+
+
+        /* ==========================================
+           HTML ESCAPE
+        =========================================== */
+
+        function escapeHtml(value) {
+
+            if (value === null || value === undefined) {
+
+                return "";
+
+            }
+
+
+            return String(value)
+
+                .replace(/&/g, "&amp;")
+
+                .replace(/</g, "&lt;")
+
+                .replace(/>/g, "&gt;")
+
+                .replace(/"/g, "&quot;")
+
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+
+        /* ==========================================
+           FORMAT DATE
+        =========================================== */
+
+        function formatEventDate(dateString) {
+
+            if (!dateString) {
+
+                return "Date To Be Announced";
+
+            }
+
+
+            const date =
+                new Date(
+                    dateString + "T00:00:00"
+                );
+
+
+            return date.toLocaleDateString(
+                "en-US",
+                {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                }
+            );
+
+        }
+
+
+
+        /* ==========================================
+           DATE PARTS
+        =========================================== */
+
+        function getDateParts(dateString) {
+
+            const date =
+                new Date(
+                    dateString + "T00:00:00"
+                );
+
+
+            return {
+
+                day:
+                    date.toLocaleDateString(
+                        "en-US",
+                        { day: "2-digit" }
+                    ),
+
+                month:
+                    date.toLocaleDateString(
+                        "en-US",
+                        { month: "short" }
+                    ).toUpperCase(),
+
+                year:
+                    date.getFullYear()
+
+            };
+
+        }
+
+
+
+        /* ==========================================
+           FORMAT TIME
+        =========================================== */
+
+        function formatTime(timeString) {
+
+            if (!timeString) {
+
+                return "";
+
+            }
+
+
+            const parts =
+                timeString.split(":");
+
+            if (parts.length < 2) {
+
+                return timeString;
+
+            }
+
+
+            let hour =
+                parseInt(parts[0], 10);
+
+            const minute =
+                parts[1];
+
+
+            const suffix =
+                hour >= 12 ? "PM" : "AM";
+
+
+            hour =
+                hour % 12 || 12;
+
+
+            return (
+                hour +
+                ":" +
+                minute +
+                " " +
+                suffix
+            );
+
+        }
+
+
+
+        /* ==========================================
+           FORMAT TIME RANGE
+        =========================================== */
+
+        function formatTimeRange(event) {
+
+            if (!event.start_time) {
+
+                return "Time To Be Announced";
+
+            }
+
+
+            if (!event.end_time) {
+
+                return formatTime(event.start_time);
+
+            }
+
+
+            return (
+                formatTime(event.start_time) +
+                " – " +
+                formatTime(event.end_time)
+            );
+
+        }
+
+
+
+        /* ==========================================
+           FEATURED EVENT
+        =========================================== */
+
+        function renderFeaturedEvent(event) {
+
+            const container =
+                document.getElementById(
+                    "featuredEventContainer"
+                );
+
+
+            if (!event) {
+
+                container.innerHTML = `
+
+                    <div class="dynamic-events-message">
+
+                        <h3>
+                            No Featured Event Yet
+                        </h3>
+
+                        <p>
+                            AYLI events and activities will appear
+                            here when they are published.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            const date =
+                getDateParts(event.event_date);
+
+
+            const image =
+                event.featured_image_url
+                    ? `
+                        <img
+                            src="${escapeHtml(event.featured_image_url)}"
+                            alt="${escapeHtml(event.title)}"
+                            class="featured-event-image"
+                        >
+                    `
+                    : "";
+
+
+            const registrationButton =
+                event.registration_url
+                    ? `
+                        <a
+                            href="${escapeHtml(event.registration_url)}"
+                            class="event-action-button"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Register / Learn More
+                        </a>
+                    `
+                    : "";
+
+
+            container.innerHTML = `
+
+                <div class="featured-event-dynamic-card">
+
+                    <div class="featured-event-dynamic-date">
+
+                        <span class="date-label">
+                            ${escapeHtml(event.event_type || "EVENT")}
+                        </span>
+
+                        <strong>
+                            ${escapeHtml(date.day)}
+                        </strong>
+
+                        <span>
+                            ${escapeHtml(date.month)}
+                            ${escapeHtml(date.year)}
+                        </span>
+
+                    </div>
+
+                    ${
+                        image
+                    }
+
+                    <div class="featured-event-dynamic-content">
+
+                        <span class="event-category">
+                            ${escapeHtml(event.event_type || "AYLI EVENT")}
+                        </span>
+
+                        <h3>
+                            ${escapeHtml(event.title)}
+                        </h3>
+
+                        <p>
+                            ${escapeHtml(event.description)}
+                        </p>
+
+                        <div class="event-meta">
+
+                            <span>
+                                Date:
+                                ${escapeHtml(
+                                    formatEventDate(
+                                        event.event_date
+                                    )
+                                )}
+                            </span>
+
+                            <span>
+                                Time:
+                                ${escapeHtml(
+                                    formatTimeRange(event)
+                                )}
+                            </span>
+
+                            ${
+                                event.location
+                                    ? `
+                                        <span>
+                                            Location:
+                                            ${escapeHtml(
+                                                event.location
+                                            )}
+                                        </span>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="event-details-button"
+                            onclick="openEventModal('${event.id}')"
+                        >
+                            View Details
+                        </button>
+
+                        ${registrationButton}
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+
+        /* ==========================================
+           UPCOMING EVENT CARD
+        =========================================== */
+
+        function renderUpcomingEvent(event, index) {
+
+            const date =
+                getDateParts(event.event_date);
+
+
+            const image =
+                event.featured_image_url
+                    ? `
+                        <img
+                            src="${escapeHtml(event.featured_image_url)}"
+                            alt="${escapeHtml(event.title)}"
+                            class="event-card-image"
+                        >
+                    `
+                    : "";
+
+
+            const registrationButton =
+                event.registration_url
+                    ? `
+                        <a
+                            href="${escapeHtml(event.registration_url)}"
+                            class="event-action-button"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Register / Learn More
+                        </a>
+                    `
+                    : "";
+
+
+            return `
+
+                <article
+                    class="event-card"
+                    data-event-id="${escapeHtml(event.id)}"
+                >
+
+                    <div class="event-card-date">
+
+                        <span>
+                            ${escapeHtml(date.month)}
+                        </span>
+
+                        <strong>
+                            ${escapeHtml(date.day)}
+                        </strong>
+
+                        <span>
+                            ${escapeHtml(date.year)}
+                        </span>
+
+                    </div>
+
+
+                    ${image}
+
+
+                    <div class="event-card-content">
+
+                        <span class="event-category">
+
+                            ${escapeHtml(
+                                event.event_type ||
+                                "AYLI EVENT"
+                            )}
+
+                        </span>
+
+
+                        <h3>
+                            ${escapeHtml(event.title)}
+                        </h3>
+
+
+                        <p>
+                            ${escapeHtml(event.description)}
+                        </p>
+
+
+                        <div class="event-meta">
+
+                            <span>
+                                Date:
+                                ${escapeHtml(
+                                    formatEventDate(
+                                        event.event_date
+                                    )
+                                )}
+                            </span>
+
+
+                            <span>
+                                Time:
+                                ${escapeHtml(
+                                    formatTimeRange(event)
+                                )}
+                            </span>
+
+
+                            ${
+                                event.location
+                                    ? `
+                                        <span>
+                                            Location:
+                                            ${escapeHtml(
+                                                event.location
+                                            )}
+                                        </span>
+                                    `
+                                    : ""
+                            }
+
+
+                            ${
+                                event.organizer
+                                    ? `
+                                        <span>
+                                            Organizer:
+                                            ${escapeHtml(
+                                                event.organizer
+                                            )}
+                                        </span>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="event-details-button"
+                            onclick="openEventModal('${event.id}')"
+                        >
+                            View Details
+                        </button>
+
+
+                        ${registrationButton}
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }
+
+
+
+        /* ==========================================
+           PAST EVENT CARD
+        =========================================== */
+
+        function renderPastEvent(event) {
+
+            const image =
+                event.featured_image_url
+                    ? `
+                        <img
+                            src="${escapeHtml(event.featured_image_url)}"
+                            alt="${escapeHtml(event.title)}"
+                            class="dynamic-event-image"
+                        >
+                    `
+                    : "";
+
+
+            return `
+
+                <div class="past-event-card">
+
+                    ${image}
+
+
+                    <span>
+                        ${escapeHtml(
+                            event.event_type ||
+                            "AYLI EVENT"
+                        )}
+                    </span>
+
+
+                    <h3>
+                        ${escapeHtml(event.title)}
+                    </h3>
+
+
+                    <p>
+                        ${escapeHtml(event.description)}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Date:
+                        </strong>
+
+                        ${escapeHtml(
+                            formatEventDate(
+                                event.event_date
+                            )
+                        )}
+                    </p>
+
+
+                    ${
+                        event.location
+                            ? `
+                                <p>
+                                    <strong>
+                                        Location:
+                                    </strong>
+
+                                    ${escapeHtml(
+                                        event.location
+                                    )}
+                                </p>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+            `;
+
+        }
+
+
+
+        /* ==========================================
+           MODAL
+        =========================================== */
+
+        let allPublishedEvents = [];
+
+
+        function openEventModal(eventId) {
+
+            const event =
+                allPublishedEvents.find(
+                    function (item) {
+
+                        return item.id === eventId;
+
+                    }
+                );
+
+
+            if (!event) {
+
+                return;
+
+            }
+
+
+            const modal =
+                document.getElementById(
+                    "eventModal"
+                );
+
+
+            const body =
+                document.getElementById(
+                    "eventModalBody"
+                );
+
+
+            const image =
+                event.featured_image_url
+                    ? `
+                        <img
+                            src="${escapeHtml(event.featured_image_url)}"
+                            alt="${escapeHtml(event.title)}"
+                            class="dynamic-event-image"
+                        >
+                    `
+                    : "";
+
+
+            const registrationButton =
+                event.registration_url
+                    ? `
+                        <a
+                            href="${escapeHtml(event.registration_url)}"
+                            class="event-action-button"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Register / Learn More
+                        </a>
+                    `
+                    : "";
+
+
+            body.innerHTML = `
+
+                ${image}
+
+
+                <span class="event-modal-category">
+
+                    ${escapeHtml(
+                        event.event_type ||
+                        "AYLI EVENT"
+                    )}
+
+                </span>
+
+
+                <h2>
+                    ${escapeHtml(event.title)}
+                </h2>
+
+
+                <div class="event-modal-meta">
+
+                    <p>
+                        <strong>
+                            Date:
+                        </strong>
+
+                        ${escapeHtml(
+                            formatEventDate(
+                                event.event_date
+                            )
+                        )}
+                    </p>
+
+
+                    <p>
+                        <strong>
+                            Time:
+                        </strong>
+
+                        ${escapeHtml(
+                            formatTimeRange(event)
+                        )}
+                    </p>
+
+
+                    ${
+                        event.location
+                            ? `
+                                <p>
+                                    <strong>
+                                        Location:
+                                    </strong>
+
+                                    ${escapeHtml(
+                                        event.location
+                                    )}
+                                </p>
+                            `
+                            : ""
+                    }
+
+
+                    ${
+                        event.organizer
+                            ? `
+                                <p>
+                                    <strong>
+                                        Organizer:
+                                    </strong>
+
+                                    ${escapeHtml(
+                                        event.organizer
+                                    )}
+                                </p>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+
+                <div class="event-modal-description">
+
+                    ${escapeHtml(
+                        event.description
+                    )}
+
+                </div>
+
+
+                ${registrationButton}
+
+            `;
+
+
+            modal.classList.add("active");
+
+            modal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            document.body.style.overflow =
+                "hidden";
+
+        }
+
+
+
+        function closeEventModal() {
+
+            const modal =
+                document.getElementById(
+                    "eventModal"
+                );
+
+
+            modal.classList.remove("active");
+
+            modal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+
+        /* ==========================================
+           LOAD EVENTS
+        =========================================== */
+
+        async function loadEvents() {
+
+            try {
+
+                await loadSupabase();
+
+
+                supabaseClient =
+                    window.supabase.createClient(
+                        SUPABASE_URL,
+                        SUPABASE_KEY
+                    );
+
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+
+                        .from("website_events")
+
+                        .select("*")
+
+                        .eq(
+                            "status",
+                            "Published"
+                        )
+
+                        .order(
+                            "event_date",
+                            {
+                                ascending: true
+                            }
+                        );
+
+
+                if (error) {
+
+                    console.error(
+                        "Events loading error:",
+                        error
+                    );
+
+                    showEventsError();
+
+                    return;
+
+                }
+
+
+                allPublishedEvents =
+                    data || [];
+
+
+                renderEvents(
+                    allPublishedEvents
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Events initialization error:",
+                    error
+                );
+
+                showEventsError();
+
+            }
+
+        }
+
+
+
+        /* ==========================================
+           RENDER EVENTS
+        =========================================== */
+
+        function renderEvents(events) {
+
+            const featuredContainer =
+                document.getElementById(
+                    "featuredEventContainer"
+                );
+
+
+            const upcomingContainer =
+                document.getElementById(
+                    "upcomingEventsContainer"
+                );
+
+
+            const pastContainer =
+                document.getElementById(
+                    "pastEventsContainer"
+                );
+
+
+            const today =
+                new Date();
+
+            today.setHours(
+                0,
+                0,
+                0,
+                0
+            );
+
+
+            const upcomingEvents =
+                events.filter(
+                    function (event) {
+
+                        const eventDate =
+                            new Date(
+                                event.event_date +
+                                "T00:00:00"
+                            );
+
+                        return eventDate >= today;
+
+                    }
+                );
+
+
+            const pastEvents =
+                events.filter(
+                    function (event) {
+
+                        const eventDate =
+                            new Date(
+                                event.event_date +
+                                "T00:00:00"
+                            );
+
+                        return eventDate < today;
+
+                    }
+                );
+
+
+            /*
+                Featured event:
+                First upcoming published event.
+                If there is no upcoming event,
+                use the most recent published event.
+            */
+
+            let featuredEvent =
+                upcomingEvents.length > 0
+                    ? upcomingEvents[0]
+                    : (
+                        pastEvents.length > 0
+                            ? pastEvents[
+                                pastEvents.length - 1
+                            ]
+                            : null
+                    );
+
+
+            renderFeaturedEvent(
+                featuredEvent
+            );
+
+
+            /*
+                Upcoming
+            */
+
+            if (
+                upcomingEvents.length === 0
+            ) {
+
+                upcomingContainer.innerHTML = `
+
+                    <div class="dynamic-events-message">
+
+                        <h3>
+                            No Upcoming Events
+                        </h3>
+
+                        <p>
+                            There are currently no upcoming
+                            AYLI events published.
+                            Please check back for new events.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+            else {
+
+                upcomingContainer.innerHTML =
+                    upcomingEvents
+                        .map(
+                            renderUpcomingEvent
+                        )
+                        .join("");
+
+            }
+
+
+            /*
+                Past Events
+            */
+
+            if (
+                pastEvents.length === 0
+            ) {
+
+                pastContainer.innerHTML = `
+
+                    <div class="dynamic-events-message">
+
+                        <h3>
+                            No Past Events
+                        </h3>
+
+                        <p>
+                            Completed AYLI events will appear
+                            in the event archive.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+            else {
+
+                pastContainer.innerHTML =
+                    pastEvents
+                        .slice()
+                        .reverse()
+                        .map(
+                            renderPastEvent
+                        )
+                        .join("");
+
+            }
+
+        }
+
+
+
+        /* ==========================================
+           ERROR MESSAGE
+        =========================================== */
+
+        function showEventsError() {
+
+            document.getElementById(
+                "featuredEventContainer"
+            ).innerHTML = `
+
+                <div class="dynamic-events-message">
+
+                    <h3>
+                        Events Temporarily Unavailable
+                    </h3>
+
+                    <p>
+                        We are unable to load AYLI events
+                        at the moment. Please try again later.
+                    </p>
+
+                </div>
+
+            `;
+
+
+            document.getElementById(
+                "upcomingEventsContainer"
+            ).innerHTML = `
+
+                <div class="dynamic-events-message">
+
+                    <h3>
+                        Events Temporarily Unavailable
+                    </h3>
+
+                    <p>
+                        Please try again later.
+                    </p>
+
+                </div>
+
+            `;
+
+
+            document.getElementById(
+                "pastEventsContainer"
+            ).innerHTML = "";
+
+        }
+
+
+
+        /* ==========================================
+           MODAL EVENTS
+        =========================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                loadEvents();
+
+
+                const closeButton =
+                    document.getElementById(
+                        "eventModalClose"
+                    );
+
+
+                const modal =
+                    document.getElementById(
+                        "eventModal"
+                    );
+
+
+                if (closeButton) {
+
+                    closeButton.addEventListener(
+                        "click",
+                        closeEventModal
+                    );
+
+                }
+
+
+                if (modal) {
+
+                    modal.addEventListener(
+                        "click",
+                        function (event) {
+
+                            if (
+                                event.target === modal
+                            ) {
+
+                                closeEventModal();
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                document.addEventListener(
+                    "keydown",
+                    function (event) {
+
+                        if (
+                            event.key === "Escape"
+                        ) {
+
+                            closeEventModal();
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* ==========================================
+           MOBILE MENU
+        =========================================== */
+
+        const mobileMenuButton =
+            document.querySelector(
+                ".mobile-menu-button"
+            );
+
+
+        const navigation =
+            document.querySelector(
+                ".main-navigation"
+            );
+
+
+        if (mobileMenuButton) {
+
+            mobileMenuButton.addEventListener(
+                "click",
+                function () {
+
+                    navigation.classList.toggle(
+                        "mobile-navigation-open"
+                    );
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

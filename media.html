@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Photos & Media | Africa Youth Leadership Institute
+    </title>
+
+
+    <meta
+        name="description"
+        content="Explore photographs and media from the Africa Youth Leadership Institute, including leadership programs, events, graduations, chapters and community activities."
+    >
+
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+
+    <style>
+
+        /* ==========================================
+           MEDIA PAGE
+        =========================================== */
+
+        .media-page-hero {
+            padding: 100px 20px;
+            background: #17202a;
+            color: #ffffff;
+        }
+
+        .media-page-hero-content {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .media-page-hero h1 {
+            max-width: 850px;
+            margin: 15px 0;
+        }
+
+        .media-page-hero p {
+            max-width: 750px;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+
+        /* ==========================================
+           MEDIA INTRO
+        =========================================== */
+
+        .media-intro {
+            padding: 80px 20px;
+        }
+
+        .media-container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .media-intro-content {
+            max-width: 850px;
+        }
+
+        .media-intro-content h2 {
+            margin: 12px 0 20px;
+        }
+
+        .media-intro-content p {
+            line-height: 1.8;
+        }
+
+
+        /* ==========================================
+           FILTERS
+        =========================================== */
+
+        .media-filter-section {
+            padding: 0 20px 50px;
+        }
+
+        .media-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .media-filter-button {
+            border: 1px solid #d5d5d5;
+            background: #ffffff;
+            color: #333333;
+            padding: 10px 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .media-filter-button:hover,
+        .media-filter-button.active {
+            background: #c9a227;
+            border-color: #c9a227;
+            color: #ffffff;
+        }
+
+
+        /* ==========================================
+           MEDIA GALLERY
+        =========================================== */
+
+        .media-gallery-section {
+            padding: 0 20px 90px;
+        }
+
+        .media-gallery {
+            display: grid;
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+            gap: 25px;
+        }
+
+        .media-card {
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.07);
+            cursor: pointer;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .media-card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.11);
+        }
+
+        .media-card-image-wrapper {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            background: #f2f2f2;
+        }
+
+        .media-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .media-card:hover .media-card-image {
+            transform: scale(1.03);
+        }
+
+        .media-card-content {
+            padding: 22px;
+        }
+
+        .media-card-category {
+            display: inline-block;
+            color: #c9a227;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .media-card-content h3 {
+            margin: 0 0 10px;
+        }
+
+        .media-card-content p {
+            margin: 0;
+            color: #666666;
+            line-height: 1.6;
+        }
+
+
+        /* ==========================================
+           EMPTY / LOADING
+        =========================================== */
+
+        .media-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .media-message h3 {
+            margin-bottom: 10px;
+        }
+
+        .media-message p {
+            color: #777777;
+        }
+
+
+        /* ==========================================
+           IMAGE MODAL
+        =========================================== */
+
+        .media-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.88);
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .media-lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-lightbox-content {
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            text-align: center;
+        }
+
+        .media-lightbox-image {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .media-lightbox-caption {
+            color: #ffffff;
+            margin-top: 18px;
+        }
+
+        .media-lightbox-caption h3 {
+            margin-bottom: 8px;
+        }
+
+        .media-lightbox-caption p {
+            margin: 0;
+            opacity: 0.85;
+        }
+
+        .media-lightbox-close {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            font-size: 36px;
+            cursor: pointer;
+        }
+
+
+        /* ==========================================
+           CTA
+        =========================================== */
+
+        .media-closing {
+            padding: 90px 20px;
+            background: #17202a;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .media-closing-content {
+            width: 92%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .media-closing-content h2 {
+            margin: 15px 0;
+        }
+
+        .media-closing-content p {
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+
+        /* ==========================================
+           RESPONSIVE
+        =========================================== */
+
+        @media (max-width: 950px) {
+
+            .media-gallery {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .media-page-hero {
+                padding: 70px 20px;
+            }
+
+            .media-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .media-card-image-wrapper {
+                height: 240px;
+            }
+
+            .media-filters {
+                flex-direction: column;
+            }
+
+            .media-filter-button {
+                width: 100%;
+            }
+
+            .media-lightbox {
+                padding: 20px;
+            }
+
+            .media-lightbox-close {
+                top: -40px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <header class="site-header">
+
+        <div class="container header-container">
+
+
+            <a
+                href="index.html"
+                class="ayli-brand"
+            >
+
+                <img
+                    src="assets/logos/ayli-logo.png"
+                    alt="Africa Youth Leadership Institute Official Logo"
+                >
+
+
+                <div class="brand-text">
+
+                    <strong>
+                        AFRICA YOUTH
+                    </strong>
+
+                    <span>
+                        LEADERSHIP INSTITUTE
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <nav class="main-navigation">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="leadership.html">
+                    Leadership
+                </a>
+
+                <a href="programs.html">
+                    Programs
+                </a>
+
+                <a href="cohorts.html">
+                    Cohorts
+                </a>
+
+                <a href="chapters.html">
+                    Chapters
+                </a>
+
+                <a href="alumni.html">
+                    Alumni
+                </a>
+
+                <a href="news.html">
+                    News
+                </a>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+                <a
+                    href="media.html"
+                    class="active"
+                >
+                    Photos & Media
+                </a>
+
+            </nav>
+
+
+            <a
+                href="apply.html"
+                class="header-apply"
+            >
+                Apply Now
+            </a>
+
+
+            <button
+                class="mobile-menu-button"
+                id="mobileMenuButton"
+                type="button"
+                aria-label="Open navigation menu"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ==========================================
+         HERO
+    =========================================== -->
+
+    <section class="media-page-hero">
+
+        <div class="media-page-hero-content">
+
+            <p class="section-label">
+                AYLI PHOTOS & MEDIA
+            </p>
+
+
+            <h1>
+                Capturing the AYLI Leadership Journey
+            </h1>
+
+
+            <p>
+                Explore photographs from AYLI leadership programs,
+                events, graduations, chapter activities and
+                community engagements across Africa.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         INTRO
+    =========================================== -->
+
+    <section class="media-intro">
+
+        <div class="media-container">
+
+            <div class="media-intro-content">
+
+                <p class="section-label">
+                    AYLI MEDIA
+                </p>
+
+
+                <h2>
+                    Moments From Our Leadership Community
+                </h2>
+
+
+                <p>
+                    The AYLI media gallery documents important moments
+                    from the Institute's programs, activities,
+                    leadership engagements and celebrations.
+                </p>
+
+
+                <p>
+                    Photographs published by the AYLI administration
+                    will automatically appear in this gallery.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         FILTERS
+    =========================================== -->
+
+    <section class="media-filter-section">
+
+        <div class="media-container">
+
+            <div
+                class="media-filters"
+                id="mediaFilters"
+            >
+
+                <button
+                    type="button"
+                    class="media-filter-button active"
+                    data-category=""
+                >
+                    All Photos
+                </button>
+
+                <button
+                    type="button"
+                    class="media-filter-button"
+                    data-category="Leadership"
+                >
+                    Leadership
+                </button>
+
+                <button
+                    type="button"
+                    class="media-filter-button"
+                    data-category="Programs"
+                >
+                    Programs
+                </button>
+
+                <button
+                    type="button"
+                    class="media-filter-button"
+                    data-category="Events"
+                >
+                    Events
+                </button>
+
+                <button
+                    type="button"
+                    class="media-filter-button"
+                    data-category="Graduation"
+                >
+                    Graduation
+                </button>
+
+                <button
+                    type="button"
+                    class="media-filter-button"
+                    data-category="Chapters"
+                >
+                    Chapters
+                </button>
+
+                <button
+                    type="button"
+                    class="media-filter-button"
+                    data-category="Students"
+                >
+                    Students
+                </button>
+
+                <button
+                    type="button"
+                    class="media-filter-button"
+                    data-category="Community"
+                >
+                    Community
+                </button>
+
+                <button
+                    type="button"
+                    class="media-filter-button"
+                    data-category="Media"
+                >
+                    Media
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         GALLERY
+    =========================================== -->
+
+    <section class="media-gallery-section">
+
+        <div class="media-container">
+
+            <div
+                class="media-gallery"
+                id="mediaGallery"
+            >
+
+                <div class="media-message">
+
+                    <h3>
+                        Loading AYLI Photos...
+                    </h3>
+
+                    <p>
+                        Please wait while the media gallery loads.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         CLOSING
+    =========================================== -->
+
+    <section class="media-closing">
+
+        <div class="media-closing-content">
+
+            <p class="section-label">
+                AFRICA YOUTH LEADERSHIP INSTITUTE
+            </p>
+
+
+            <h2>
+                Every Moment Tells a Leadership Story.
+            </h2>
+
+
+            <p>
+                Follow AYLI's journey through photographs,
+                programs, events and activities across
+                the Institute's growing leadership community.
+            </p>
+
+
+            <a
+                href="events.html"
+                class="btn-primary"
+            >
+                Explore AYLI Events
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         LIGHTBOX
+    =========================================== -->
+
+    <div
+        class="media-lightbox"
+        id="mediaLightbox"
+    >
+
+        <div class="media-lightbox-content">
+
+            <button
+                type="button"
+                class="media-lightbox-close"
+                id="mediaLightboxClose"
+                aria-label="Close photo"
+            >
+                ×
+            </button>
+
+
+            <img
+                src=""
+                alt=""
+                class="media-lightbox-image"
+                id="mediaLightboxImage"
+            >
+
+
+            <div
+                class="media-lightbox-caption"
+                id="mediaLightboxCaption"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         FOOTER
+    =========================================== -->
+
+    <footer class="site-footer">
+
+        <div class="container footer-container">
+
+
+            <div class="footer-brand">
+
+                <img
+                    src="assets/logos/ayli-logo.png"
+                    alt="Africa Youth Leadership Institute Official Logo"
+                >
+
+
+                <h3>
+                    Africa Youth Leadership Institute
+                </h3>
+
+
+                <p>
+                    Developing ethical, competent and
+                    transformational young leaders across Africa.
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Explore
+                </h4>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="leadership.html">
+                    Leadership
+                </a>
+
+                <a href="programs.html">
+                    Programs
+                </a>
+
+                <a href="cohorts.html">
+                    Cohorts
+                </a>
+
+                <a href="chapters.html">
+                    Chapters
+                </a>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Community
+                </h4>
+
+                <a href="alumni.html">
+                    Alumni
+                </a>
+
+                <a href="news.html">
+                    News
+                </a>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+                <a href="media.html">
+                    Photos & Media
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Contact AYLI
+                </h4>
+
+                <p>
+                    Monrovia, Liberia
+                </p>
+
+                <a
+                    href="mailto:infoayli.org@gmail.com"
+                >
+                    infoayli.org@gmail.com
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="footer-bottom">
+
+            <div class="container">
+
+                <p>
+                    © 2026 Africa Youth Leadership Institute.
+                    All Rights Reserved.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ==========================================
+         SUPABASE + MEDIA JAVASCRIPT
+    =========================================== -->
+
+    <script>
+
+        const SUPABASE_URL =
+            "https://jutxahzlecbbphgxlouy.supabase.co";
+
+
+        const SUPABASE_KEY =
+            "sb_publishable_3e7SrhjXjF6haRM7yWIv3A_XRj-nlYk";
+
+
+        let supabaseClient;
+
+
+        let allMedia = [];
+
+        let activeCategory = "";
+
+
+
+        /* ==========================================
+           LOAD SUPABASE
+        =========================================== */
+
+        function loadSupabase() {
+
+            return new Promise(
+                function (
+                    resolve,
+                    reject
+                ) {
+
+                    if (
+                        window.supabase
+                    ) {
+
+                        resolve();
+
+                        return;
+
+                    }
+
+
+                    const script =
+                        document.createElement(
+                            "script"
+                        );
+
+
+                    script.src =
+                        "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+
+                    script.onload =
+                        function () {
+
+                            resolve();
+
+                        };
+
+
+                    script.onerror =
+                        function () {
+
+                            reject(
+                                new Error(
+                                    "Failed to load Supabase."
+                                )
+                            );
+
+                        };
+
+
+                    document.head.appendChild(
+                        script
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* ==========================================
+           ESCAPE HTML
+        =========================================== */
+
+        function escapeHtml(
+            value
+        ) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+
+                return "";
+
+            }
+
+
+            return String(value)
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+
+        /* ==========================================
+           LOAD PUBLISHED MEDIA
+        =========================================== */
+
+        async function loadMedia() {
+
+            try {
+
+                await loadSupabase();
+
+
+                supabaseClient =
+                    window.supabase.createClient(
+                        SUPABASE_URL,
+                        SUPABASE_KEY
+                    );
+
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+
+                        .from(
+                            "website_media"
+                        )
+
+                        .select(
+                            "*"
+                        )
+
+                        .eq(
+                            "status",
+                            "Published"
+                        )
+
+                        .order(
+                            "created_at",
+                            {
+                                ascending:
+                                    false
+                            }
+                        );
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                allMedia =
+                    data || [];
+
+
+                renderMedia();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Unable to load AYLI media:",
+                    error
+                );
+
+
+                document.getElementById(
+                    "mediaGallery"
+                ).innerHTML = `
+
+                    <div
+                        class="media-message"
+                    >
+
+                        <h3>
+                            Media Temporarily Unavailable
+                        </h3>
+
+                        <p>
+                            We are unable to load
+                            AYLI photographs at this time.
+                            Please try again later.
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        /* ==========================================
+           RENDER MEDIA
+        =========================================== */
+
+        function renderMedia() {
+
+            const gallery =
+                document.getElementById(
+                    "mediaGallery"
+                );
+
+
+            const filtered =
+                activeCategory
+                    ? allMedia.filter(
+                        function (
+                            media
+                        ) {
+
+                            return (
+                                media.category ===
+                                activeCategory
+                            );
+
+                        }
+                    )
+                    : allMedia;
+
+
+            if (
+                filtered.length ===
+                0
+            ) {
+
+                gallery.innerHTML = `
+
+                    <div
+                        class="media-message"
+                    >
+
+                        <h3>
+                            No Photos Available
+                        </h3>
+
+                        <p>
+                            There are currently no published
+                            photographs in this category.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            gallery.innerHTML =
+                filtered
+                    .map(
+                        function (
+                            media
+                        ) {
+
+                            return `
+
+                                <article
+                                    class="media-card"
+                                    data-media-id="${escapeHtml(
+                                        media.id
+                                    )}"
+                                >
+
+                                    <div
+                                        class="media-card-image-wrapper"
+                                    >
+
+                                        <img
+                                            src="${escapeHtml(
+                                                media.image_url
+                                            )}"
+                                            alt="${escapeHtml(
+                                                media.alt_text ||
+                                                media.title
+                                            )}"
+                                            class="media-card-image"
+                                            loading="lazy"
+                                        >
+
+                                    </div>
+
+
+                                    <div
+                                        class="media-card-content"
+                                    >
+
+                                        <span
+                                            class="media-card-category"
+                                        >
+                                            ${escapeHtml(
+                                                media.category
+                                            )}
+                                        </span>
+
+
+                                        <h3>
+                                            ${escapeHtml(
+                                                media.title
+                                            )}
+                                        </h3>
+
+
+                                        ${
+                                            media.caption
+                                                ? `
+                                                    <p>
+                                                        ${escapeHtml(
+                                                            media.caption
+                                                        )}
+                                                    </p>
+                                                `
+                                                : ""
+                                        }
+
+                                    </div>
+
+                                </article>
+
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+
+            attachMediaCardEvents();
+
+        }
+
+
+
+        /* ==========================================
+           LIGHTBOX
+        =========================================== */
+
+        function attachMediaCardEvents() {
+
+            document
+                .querySelectorAll(
+                    ".media-card"
+                )
+                .forEach(
+                    function (
+                        card
+                    ) {
+
+                        card.addEventListener(
+                            "click",
+                            function () {
+
+                                const mediaId =
+                                    card.dataset
+                                        .mediaId;
+
+
+                                const media =
+                                    allMedia.find(
+                                        function (
+                                            item
+                                        ) {
+
+                                            return (
+                                                item.id ===
+                                                mediaId
+                                            );
+
+                                        }
+                                    );
+
+
+                                if (
+                                    media
+                                ) {
+
+                                    openLightbox(
+                                        media
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+
+        function openLightbox(
+            media
+        ) {
+
+            const lightbox =
+                document.getElementById(
+                    "mediaLightbox"
+                );
+
+
+            const image =
+                document.getElementById(
+                    "mediaLightboxImage"
+                );
+
+
+            const caption =
+                document.getElementById(
+                    "mediaLightboxCaption"
+                );
+
+
+            image.src =
+                media.image_url;
+
+
+            image.alt =
+                media.alt_text ||
+                media.title;
+
+
+            caption.innerHTML = `
+
+                <h3>
+                    ${escapeHtml(
+                        media.title
+                    )}
+                </h3>
+
+                ${
+                    media.caption
+                        ? `
+                            <p>
+                                ${escapeHtml(
+                                    media.caption
+                                )}
+                            </p>
+                        `
+                        : ""
+                }
+
+            `;
+
+
+            lightbox.classList.add(
+                "active"
+            );
+
+
+            document.body.style.overflow =
+                "hidden";
+
+        }
+
+
+
+        function closeLightbox() {
+
+            document
+                .getElementById(
+                    "mediaLightbox"
+                )
+                .classList.remove(
+                    "active"
+                );
+
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+
+        /* ==========================================
+           FILTER BUTTONS
+        =========================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                loadMedia();
+
+
+                document
+                    .querySelectorAll(
+                        ".media-filter-button"
+                    )
+                    .forEach(
+                        function (
+                            button
+                        ) {
+
+                            button.addEventListener(
+                                "click",
+                                function () {
+
+                                    document
+                                        .querySelectorAll(
+                                            ".media-filter-button"
+                                        )
+                                        .forEach(
+                                            function (
+                                                item
+                                            ) {
+
+                                                item.classList.remove(
+                                                    "active"
+                                                );
+
+                                            }
+                                        );
+
+
+                                    this.classList.add(
+                                        "active"
+                                    );
+
+
+                                    activeCategory =
+                                        this.dataset
+                                            .category ||
+                                        "";
+
+
+                                    renderMedia();
+
+                                }
+                            );
+
+                        }
+                    );
+
+
+                document
+                    .getElementById(
+                        "mediaLightboxClose"
+                    )
+                    .addEventListener(
+                        "click",
+                        closeLightbox
+                    );
+
+
+                document
+                    .getElementById(
+                        "mediaLightbox"
+                    )
+                    .addEventListener(
+                        "click",
+                        function (
+                            event
+                        ) {
+
+                            if (
+                                event.target ===
+                                this
+                            ) {
+
+                                closeLightbox();
+
+                            }
+
+                        }
+                    );
+
+
+                document.addEventListener(
+                    "keydown",
+                    function (
+                        event
+                    ) {
+
+                        if (
+                            event.key ===
+                            "Escape"
+                        ) {
+
+                            closeLightbox();
+
+                        }
+
+                    }
+                );
+
+
+                /* MOBILE MENU */
+
+                const mobileMenuButton =
+                    document.getElementById(
+                        "mobileMenuButton"
+                    );
+
+
+                const navigation =
+                    document.querySelector(
+                        ".main-navigation"
+                    );
+
+
+                if (
+                    mobileMenuButton &&
+                    navigation
+                ) {
+
+                    mobileMenuButton.addEventListener(
+                        "click",
+                        function () {
+
+                            navigation.classList.toggle(
+                                "mobile-navigation-open"
+                            );
+
+                        }
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

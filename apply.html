@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Apply | Africa Youth Leadership Institute</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           AYLI APPLICATION PAGE
+        ===================================================== */
+
+        .application-hero {
+            padding: 110px 20px 80px;
+            text-align: center;
+            background: linear-gradient(
+                135deg,
+                #071a2b,
+                #0d3550
+            );
+            color: #ffffff;
+        }
+
+        .application-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .application-hero p {
+            max-width: 760px;
+            margin: 0 auto;
+            font-size: 18px;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .application-section {
+            padding: 80px 20px;
+            background: #f7f9fc;
+        }
+
+        .application-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .application-intro {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .application-intro h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #071a2b;
+        }
+
+        .application-intro p {
+            max-width: 760px;
+            margin: 0 auto;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .application-notice {
+            padding: 20px 24px;
+            margin-bottom: 35px;
+            border-left: 5px solid #c9a227;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .application-notice strong {
+            color: #071a2b;
+        }
+
+        .application-form {
+            background: #ffffff;
+            padding: 45px;
+            border-radius: 12px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        }
+
+        .form-section {
+            margin-bottom: 45px;
+        }
+
+        .form-section-title {
+            font-size: 23px;
+            color: #071a2b;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e8edf3;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #263544;
+        }
+
+        .required {
+            color: #c0392b;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #d8dee6;
+            border-radius: 7px;
+            font-size: 15px;
+            font-family: inherit;
+            box-sizing: border-box;
+            background: #fff;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0d557d;
+            box-shadow: 0 0 0 3px rgba(13,85,125,0.08);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .photo-upload {
+            padding: 20px;
+            border: 2px dashed #d8dee6;
+            border-radius: 8px;
+            background: #fafbfd;
+        }
+
+        .photo-upload small {
+            display: block;
+            margin-top: 8px;
+            color: #777;
+        }
+
+        .declaration {
+            background: #f7f9fc;
+            padding: 22px;
+            border-radius: 8px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .checkbox-group label {
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .submit-area {
+            text-align: center;
+            padding-top: 15px;
+        }
+
+        .submit-btn {
+            border: none;
+            background: #c9a227;
+            color: #071a2b;
+            padding: 16px 38px;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-message {
+            display: none;
+            padding: 16px 20px;
+            border-radius: 7px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .form-message.success {
+            display: block;
+            background: #eaf7ee;
+            border: 1px solid #b8dfc2;
+            color: #216b35;
+        }
+
+        .form-message.error {
+            display: block;
+            background: #fbecec;
+            border: 1px solid #e3b5b5;
+            color: #8a2626;
+        }
+
+        .application-footer-note {
+            text-align: center;
+            margin-top: 35px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+
+            .application-hero h1 {
+                font-size: 36px;
+            }
+
+            .application-form {
+                padding: 25px 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+    <div class="header-container">
+
+        <a
+            href="index.html"
+            class="site-logo"
+        >
+
+            <img
+                src="assets/logos/ayli-logo.png"
+                alt="Africa Youth Leadership Institute Logo"
+            >
+
+        </a>
+
+
+        <nav class="main-navigation">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="leadership.html">
+                Leadership
+            </a>
+
+            <a href="programs.html">
+                Programs
+            </a>
+
+            <a href="cohorts.html">
+                Cohorts
+            </a>
+
+            <a href="chapters.html">
+                Chapters
+            </a>
+
+            <a href="alumni.html">
+                Alumni
+            </a>
+
+            <a href="news.html">
+                News
+            </a>
+
+            <a href="events.html">
+                Events
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="application-hero">
+
+    <h1>
+        Apply to AYLI
+    </h1>
+
+    <p>
+        Take the next step in your leadership journey.
+        Submit your application to the Africa Youth Leadership
+        Institute and become part of a growing continental
+        community of young leaders.
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     APPLICATION SECTION
+===================================================== -->
+
+<section class="application-section">
+
+    <div class="application-container">
+
+
+        <div class="application-intro">
+
+            <h2>
+                AYLI Leadership School Application
+            </h2>
+
+            <p>
+                Please complete the application form carefully.
+                All required information should be accurate and
+                complete before submitting your application.
+            </p>
+
+        </div>
+
+
+        <div class="application-notice">
+
+            <strong>
+                Application Information:
+            </strong>
+
+            Applications are reviewed by the appropriate AYLI
+            office. Submission of an application does not by
+            itself constitute admission into the program.
+
+        </div>
+
+
+        <div
+            id="formMessage"
+            class="form-message"
+        ></div>
+
+
+        <form
+            id="applicationForm"
+            class="application-form"
+        >
+
+
+            <!-- =================================================
+                 PERSONAL INFORMATION
+            ================================================== -->
+
+            <div class="form-section">
+
+                <h3 class="form-section-title">
+                    01. Personal Information
+                </h3>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            Full Name
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="full_name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="gender">
+                            Gender
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="gender"
+                            name="gender"
+                            required
+                        >
+
+                            <option value="">
+                                Select Gender
+                            </option>
+
+                            <option value="Male">
+                                Male
+                            </option>
+
+                            <option value="Female">
+                                Female
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="dob">
+                            Date of Birth
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="dob"
+                            name="date_of_birth"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="nationality">
+                            Nationality
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nationality"
+                            name="nationality"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="country">
+                            Country of Residence
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="country"
+                            name="country"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="city">
+                            City
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="city"
+                            name="city"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CONTACT INFORMATION
+            ================================================== -->
+
+            <div class="form-section">
+
+                <h3 class="form-section-title">
+                    02. Contact Information
+                </h3>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="whatsapp">
+                            WhatsApp Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="whatsapp"
+                            name="whatsapp"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label for="email">
+                            Email Address
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 EDUCATION
+            ================================================== -->
+
+            <div class="form-section">
+
+                <h3 class="form-section-title">
+                    03. Educational Background
+                </h3>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="education">
+                            Highest Educational Level
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="education"
+                            name="education_level"
+                            required
+                        >
+
+                            <option value="">
+                                Select Level
+                            </option>
+
+                            <option value="Secondary School">
+                                Secondary School
+                            </option>
+
+                            <option value="Certificate">
+                                Certificate
+                            </option>
+
+                            <option value="Diploma">
+                                Diploma
+                            </option>
+
+                            <option value="Bachelor's Degree">
+                                Bachelor's Degree
+                            </option>
+
+                            <option value="Master's Degree">
+                                Master's Degree
+                            </option>
+
+                            <option value="Doctorate">
+                                Doctorate
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="institution">
+                            School / Institution
+                        </label>
+
+                        <input
+                            type="text"
+                            id="institution"
+                            name="institution"
+                        >
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROGRAM INFORMATION
+            ================================================== -->
+
+            <div class="form-section">
+
+                <h3 class="form-section-title">
+                    04. Program Information
+                </h3>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label for="program">
+                            Preferred Program
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="program"
+                            name="program"
+                            required
+                        >
+
+                            <option value="">
+                                Select Program
+                            </option>
+
+                            <option value="AYLI Leadership School">
+                                AYLI Leadership School
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="cohort">
+                            Preferred Cohort
+                            <span class="required">*</span>
+                        </label>
+
+                        <select
+                            id="cohort"
+                            name="cohort"
+                            required
+                        >
+
+                            <option value="">
+                                Select Cohort
+                            </option>
+
+                            <option value="Cohort 12">
+                                Cohort 12
+                            </option>
+
+                            <option value="Future Cohort">
+                                Future Cohort
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="chapter">
+                            Preferred Chapter / Country
+                        </label>
+
+                        <select
+                            id="chapter"
+                            name="chapter"
+                        >
+
+                            <option value="">
+                                Select Country
+                            </option>
+
+                            <option value="Gambia">
+                                The Gambia
+                            </option>
+
+                            <option value="Sierra Leone">
+                                Sierra Leone
+                            </option>
+
+                            <option value="Ghana">
+                                Ghana
+                            </option>
+
+                            <option value="Uganda">
+                                Uganda
+                            </option>
+
+                            <option value="Kenya">
+                                Kenya
+                            </option>
+
+                            <option value="Tanzania">
+                                Tanzania
+                            </option>
+
+                            <option value="Other Country">
+                                Other Country
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 MOTIVATION
+            ================================================== -->
+
+            <div class="form-section">
+
+                <h3 class="form-section-title">
+                    05. Leadership Motivation
+                </h3>
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group full-width">
+
+                        <label for="motivation">
+                            Why do you want to join AYLI?
+                            <span class="required">*</span>
+                        </label>
+
+                        <textarea
+                            id="motivation"
+                            name="motivation"
+                            required
+                            placeholder="Tell us about your motivation for joining AYLI..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label for="leadershipExperience">
+                            Describe your leadership experience
+                        </label>
+
+                        <textarea
+                            id="leadershipExperience"
+                            name="leadership_experience"
+                            placeholder="Briefly describe any leadership, community, academic, professional, or volunteer experience..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label for="goals">
+                            What do you hope to achieve through AYLI?
+                        </label>
+
+                        <textarea
+                            id="goals"
+                            name="goals"
+                            placeholder="Tell us about your goals and expectations..."
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PHOTO
+            ================================================== -->
+
+            <div class="form-section">
+
+                <h3 class="form-section-title">
+                    06. Profile Photo
+                </h3>
+
+
+                <div class="form-group">
+
+                    <label for="profilePhoto">
+                        Upload Profile Photo
+                    </label>
+
+                    <div class="photo-upload">
+
+                        <input
+                            type="file"
+                            id="profilePhoto"
+                            name="profile_photo"
+                            accept="image/*"
+                        >
+
+                        <small>
+                            Recommended: clear passport-style photo.
+                            Maximum file size will be enforced when
+                            the application system is connected.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 DECLARATION
+            ================================================== -->
+
+            <div class="form-section">
+
+                <h3 class="form-section-title">
+                    07. Declaration
+                </h3>
+
+
+                <div class="declaration">
+
+                    I certify that the information provided in this
+                    application is true and accurate to the best of
+                    my knowledge. I understand that providing false
+                    information may affect the review of my
+                    application.
+
+                </div>
+
+
+                <div class="checkbox-group">
+
+                    <input
+                        type="checkbox"
+                        id="declaration"
+                        name="declaration"
+                        required
+                    >
+
+                    <label for="declaration">
+
+                        I confirm that the information provided is
+                        accurate and I agree to the AYLI application
+                        declaration.
+
+                        <span class="required">*</span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SUBMIT
+            ================================================== -->
+
+            <div class="submit-area">
+
+                <button
+                    type="submit"
+                    id="submitButton"
+                    class="submit-btn"
+                >
+
+                    Submit Application
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+        <div class="application-footer-note">
+
+            For questions regarding applications, please contact
+            the AYLI Admissions & Records Office or use the
+            <a href="contact.html">
+                AYLI Contact Page
+            </a>.
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div class="footer-container">
+
+
+        <div class="footer-column footer-brand">
+
+            <img
+                src="assets/logos/ayli-logo.png"
+                alt="AYLI Logo"
+            >
+
+            <p>
+                Africa Youth Leadership Institute
+            </p>
+
+            <p>
+                Developing young leaders for Africa's future.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Explore
+            </h3>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="leadership.html">
+                Leadership
+            </a>
+
+            <a href="programs.html">
+                Programs
+            </a>
+
+            <a href="cohorts.html">
+                Cohorts
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Community
+            </h3>
+
+            <a href="chapters.html">
+                Chapters
+            </a>
+
+            <a href="alumni.html">
+                Alumni
+            </a>
+
+            <a href="news.html">
+                News
+            </a>
+
+            <a href="events.html">
+                Events
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Contact
+            </h3>
+
+            <a href="contact.html">
+                Contact AYLI
+            </a>
+
+            <a href="apply.html">
+                Apply Now
+            </a>
+
+            <p>
+                Monrovia, Liberia
+            </p>
+
+            <p>
+                infoayli.org@gmail.com
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Africa Youth Leadership Institute.
+            All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="js/app.js"></script>
+
+
+<!-- =====================================================
+     AYLI APPLICATION SUPABASE CONNECTION
+===================================================== -->
+
+<script>
+
+    const SUPABASE_URL =
+        "https://jutxahzlecbbphgxlouy.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_3e7SrhjXjF6haRM7yWIv3A_XRj-nlYk";
+
+
+    let applicationSupabase = null;
+
+
+    // ======================================================
+    // LOAD SUPABASE
+    // ======================================================
+
+    async function loadApplicationSupabase() {
+
+        return new Promise(function(resolve, reject) {
+
+            if (window.supabase) {
+
+                resolve();
+
+                return;
+            }
+
+
+            const script =
+                document.createElement("script");
+
+
+            script.src =
+                "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+
+            script.onload =
+                function() {
+
+                    resolve();
+
+                };
+
+
+            script.onerror =
+                function() {
+
+                    reject(
+                        new Error(
+                            "Unable to load the application system."
+                        )
+                    );
+
+                };
+
+
+            document.head.appendChild(script);
+
+        });
+
+    }
+
+
+    // ======================================================
+    // GENERATE APPLICATION NUMBER
+    // ======================================================
+
+    function generateApplicationNumber() {
+
+        const year =
+            new Date().getFullYear();
+
+
+        const randomNumber =
+            Math.floor(
+                100000 +
+                Math.random() * 900000
+            );
+
+
+        return "AYLI-APP-" +
+            year +
+            "-" +
+            randomNumber;
+
+    }
+
+
+    // ======================================================
+    // SHOW MESSAGE
+    // ======================================================
+
+    function showApplicationMessage(
+        type,
+        message
+    ) {
+
+        const formMessage =
+            document.getElementById(
+                "formMessage"
+            );
+
+
+        formMessage.className =
+            "form-message " + type;
+
+
+        formMessage.innerHTML =
+            message;
+
+
+        formMessage.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }
+
+
+    // ======================================================
+    // INITIALIZE
+    // ======================================================
+
+    async function initializeApplication() {
+
+        try {
+
+            await loadApplicationSupabase();
+
+
+            applicationSupabase =
+                window.supabase.createClient(
+                    SUPABASE_URL,
+                    SUPABASE_KEY
+                );
+
+
+            console.log(
+                "AYLI Application System Connected."
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Application initialization error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    // ======================================================
+    // FORM SUBMISSION
+    // ======================================================
+
+    document
+        .getElementById("applicationForm")
+        .addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const form =
+                    event.target;
+
+
+                const submitButton =
+                    document.getElementById(
+                        "submitButton"
+                    );
+
+
+                submitButton.disabled =
+                    true;
+
+
+                submitButton.textContent =
+                    "Submitting Application...";
+
+
+                try {
+
+                    // --------------------------------------
+                    // MAKE SURE SUPABASE IS READY
+                    // --------------------------------------
+
+                    if (!applicationSupabase) {
+
+                        await initializeApplication();
+
+                    }
+
+
+                    if (!applicationSupabase) {
+
+                        throw new Error(
+                            "Application system is unavailable."
+                        );
+
+                    }
+
+
+                    // --------------------------------------
+                    // COLLECT FORM DATA
+                    // --------------------------------------
+
+                    const formData =
+                        new FormData(form);
+
+
+                    const applicationNumber =
+                        generateApplicationNumber();
+
+
+                    // --------------------------------------
+                    // PREPARE APPLICATION
+                    // --------------------------------------
+
+                    const application = {
+
+                        application_number:
+                            applicationNumber,
+
+                        full_name:
+                            formData.get("full_name"),
+
+                        gender:
+                            formData.get("gender"),
+
+                        date_of_birth:
+                            formData.get("date_of_birth"),
+
+                        nationality:
+                            formData.get("nationality"),
+
+                        country:
+                            formData.get("country"),
+
+                        city:
+                            formData.get("city"),
+
+                        phone:
+                            formData.get("phone"),
+
+                        whatsapp:
+                            formData.get("whatsapp") || null,
+
+                        email:
+                            formData.get("email"),
+
+                        education_level:
+                            formData.get("education_level"),
+
+                        institution:
+                            formData.get("institution") || null,
+
+                        program:
+                            formData.get("program"),
+
+                        cohort:
+                            formData.get("cohort"),
+
+                        chapter:
+                            formData.get("chapter") || null,
+
+                        motivation:
+                            formData.get("motivation"),
+
+                        leadership_experience:
+                            formData.get(
+                                "leadership_experience"
+                            ) || null,
+
+                        goals:
+                            formData.get("goals") || null,
+
+                        status:
+                            "Pending"
+
+                    };
+
+
+                    // --------------------------------------
+                    // INSERT INTO SUPABASE
+                    // --------------------------------------
+
+                    const {
+                        data,
+                        error
+                    } =
+                        await applicationSupabase
+                            .from("applications")
+                            .insert([
+                                application
+                            ])
+                            .select()
+                            .single();
+
+
+                    if (error) {
+
+                        console.error(
+                            "Supabase application error:",
+                            error
+                        );
+
+
+                        throw error;
+
+                    }
+
+
+                    // --------------------------------------
+                    // SUCCESS
+                    // --------------------------------------
+
+                    showApplicationMessage(
+                        "success",
+
+                        "<strong>Application Submitted Successfully!</strong><br><br>" +
+
+                        "Thank you for applying to the " +
+                        "Africa Youth Leadership Institute." +
+
+                        "<br><br>" +
+
+                        "Your Application Number is:<br>" +
+
+                        "<strong style='font-size:20px;'>" +
+                        data.application_number +
+                        "</strong>" +
+
+                        "<br><br>" +
+
+                        "Please keep this application number " +
+                        "for your records. Your application " +
+                        "will be reviewed by the appropriate " +
+                        "AYLI office."
+                    );
+
+
+                    // --------------------------------------
+                    // RESET FORM
+                    // --------------------------------------
+
+                    form.reset();
+
+
+                    // --------------------------------------
+                    // LOG APPLICATION
+                    // --------------------------------------
+
+                    console.log(
+                        "AYLI Application submitted:",
+                        data
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Application submission failed:",
+                        error
+                    );
+
+
+                    showApplicationMessage(
+                        "error",
+
+                        "<strong>Application Not Submitted</strong><br><br>" +
+
+                        "We were unable to submit your application " +
+                        "at this time. Please check your information " +
+                        "and try again."
+                    );
+
+                }
+
+
+                submitButton.disabled =
+                    false;
+
+
+                submitButton.textContent =
+                    "Submit Application";
+
+            }
+        );
+
+
+    // ======================================================
+    // START
+    // ======================================================
+
+    initializeApplication();
+
+</script>
+
+
+</body>
+</html>

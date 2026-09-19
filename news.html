@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        News & Updates | Africa Youth Leadership Institute
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           DYNAMIC NEWS
+        ===================================================== */
+
+        .dynamic-news-message {
+            width: 100%;
+            padding: 45px 25px;
+            text-align: center;
+            color: #666;
+            box-sizing: border-box;
+        }
+
+
+        .dynamic-news-message h3 {
+            margin-bottom: 10px;
+        }
+
+
+        .dynamic-news-message p {
+            margin: 0;
+        }
+
+
+        .featured-news-image img {
+            width: 100%;
+            height: 100%;
+            min-height: 320px;
+            object-fit: cover;
+            display: block;
+        }
+
+
+        .news-image-placeholder {
+            min-height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .news-card-image img {
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+
+        .news-date {
+            display: block;
+            margin-top: 8px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: #777;
+        }
+
+
+        .news-category {
+            display: inline-block;
+        }
+
+
+        .announcement-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+
+        .announcement-item {
+            padding: 18px;
+            border-left: 3px solid #c9a227;
+            background: #ffffff;
+        }
+
+
+        .announcement-item h3 {
+            margin: 0 0 7px;
+        }
+
+
+        .announcement-item p {
+            margin: 0 0 7px;
+        }
+
+
+        .announcement-date {
+            font-size: 12px;
+            color: #777;
+        }
+
+
+        /* =====================================================
+           NEWS ARTICLE MODAL
+        ===================================================== */
+
+        .news-article-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 9999;
+        }
+
+
+        .news-article-modal.active {
+            display: flex;
+        }
+
+
+        .news-article-box {
+            width: 100%;
+            max-width: 850px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 30px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+
+        .news-article-close {
+            position: absolute;
+            top: 15px;
+            right: 18px;
+            border: none;
+            background: transparent;
+            font-size: 30px;
+            cursor: pointer;
+            color: #666;
+        }
+
+
+        .news-article-box h2 {
+            margin: 10px 45px 10px 0;
+        }
+
+
+        .article-meta {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+
+        .article-image {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            border-radius: 7px;
+            margin-bottom: 20px;
+        }
+
+
+        .article-content {
+            line-height: 1.8;
+            color: #333;
+            white-space: pre-line;
+        }
+
+
+        @media (max-width: 700px) {
+
+            .news-article-box {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <header class="site-header">
+
+        <div class="header-container">
+
+
+            <a href="index.html" class="brand">
+
+                <img
+                    src="assets/logos/ayli-logo.png"
+                    alt="Africa Youth Leadership Institute Official Logo"
+                >
+
+                <div class="brand-text">
+
+                    <span class="brand-name">
+                        Africa Youth Leadership Institute
+                    </span>
+
+                    <span class="brand-tagline">
+                        Leadership • Service • Impact
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <nav class="main-navigation">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="leadership.html">
+                    Leadership
+                </a>
+
+                <a href="programs.html">
+                    Programs
+                </a>
+
+                <a href="cohorts.html">
+                    Cohorts
+                </a>
+
+                <a href="chapters.html">
+                    Chapters
+                </a>
+
+                <a href="alumni.html">
+                    Alumni
+                </a>
+
+                <a href="news.html" class="active">
+                    News
+                </a>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+            </nav>
+
+
+            <a
+                href="apply.html"
+                class="header-apply-button"
+            >
+                Apply Now
+            </a>
+
+
+            <button
+                class="mobile-menu-button"
+                type="button"
+                aria-label="Open navigation menu"
+            >
+                ☰
+            </button>
+
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ==========================================
+         NEWS HERO
+    =========================================== -->
+
+    <section class="news-page-hero">
+
+        <div class="news-page-hero-content">
+
+            <span class="section-label">
+                AYLI NEWS & UPDATES
+            </span>
+
+            <h1>
+                Stories, Announcements & Leadership Updates
+            </h1>
+
+            <p>
+                Stay informed about the Africa Youth Leadership
+                Institute, our programs, cohorts, chapters,
+                leadership initiatives and activities across Africa.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         NEWS INTRO
+    =========================================== -->
+
+    <section class="news-intro">
+
+        <div class="news-container">
+
+            <div class="news-intro-content">
+
+                <span class="section-label">
+                    FROM AYLI
+                </span>
+
+                <h2>
+                    Keeping Our Community Informed
+                </h2>
+
+                <p>
+                    The AYLI News section provides a central space
+                    for institutional announcements, program updates,
+                    leadership activities, chapter developments and
+                    stories from the Institute.
+                </p>
+
+                <p>
+                    As AYLI continues to grow, this platform will
+                    become a resource for students, alumni, partners,
+                    leaders and members of the wider African youth
+                    leadership community.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         FEATURED NEWS
+    =========================================== -->
+
+    <section class="featured-news">
+
+        <div class="news-container">
+
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    FEATURED
+                </span>
+
+                <h2>
+                    Featured AYLI Story
+                </h2>
+
+                <p>
+                    Highlighting important developments and stories
+                    from the Africa Youth Leadership Institute.
+                </p>
+
+            </div>
+
+
+            <div
+                id="featuredNewsContainer"
+                class="featured-news-card"
+            >
+
+                <div class="dynamic-news-message">
+
+                    <h3>
+                        Loading AYLI news...
+                    </h3>
+
+                    <p>
+                        Please wait while the latest published story loads.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         NEWS GRID
+    =========================================== -->
+
+    <section class="news-grid-section">
+
+        <div class="news-container">
+
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    LATEST UPDATES
+                </span>
+
+                <h2>
+                    AYLI News
+                </h2>
+
+                <p>
+                    Updates published by the Africa Youth Leadership Institute.
+                </p>
+
+            </div>
+
+
+            <div
+                id="newsCardsGrid"
+                class="news-cards-grid"
+            >
+
+                <div class="dynamic-news-message">
+
+                    <h3>
+                        Loading news...
+                    </h3>
+
+                    <p>
+                        Published AYLI stories will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         ANNOUNCEMENTS
+    =========================================== -->
+
+    <section class="news-announcements">
+
+        <div class="news-container">
+
+
+            <div class="news-announcements-grid">
+
+
+                <div class="news-announcements-content">
+
+                    <span class="section-label">
+                        ANNOUNCEMENTS
+                    </span>
+
+                    <h2>
+                        Official AYLI Announcements
+                    </h2>
+
+                    <p>
+                        Important notices concerning students,
+                        graduates, programs, applications, events
+                        and institutional activities will be
+                        published here.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="announcementsContainer"
+                    class="announcement-list"
+                >
+
+                    <div class="announcement-status">
+
+                        <span>
+                            AYLI OFFICIAL UPDATES
+                        </span>
+
+                        <h3>
+                            Loading announcements...
+                        </h3>
+
+                        <p>
+                            Official announcements published by AYLI
+                            will appear here.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         MEDIA & STORIES
+    =========================================== -->
+
+    <section class="news-media">
+
+        <div class="news-container">
+
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    STORIES & MEDIA
+                </span>
+
+                <h2>
+                    AYLI in the Community
+                </h2>
+
+                <p>
+                    Future stories, interviews, photographs and
+                    media features from AYLI activities will be
+                    presented in this section.
+                </p>
+
+            </div>
+
+
+            <div class="media-grid">
+
+
+                <div class="media-card">
+
+                    <div class="media-card-icon">
+                        01
+                    </div>
+
+                    <h3>
+                        Interviews & Conversations
+                    </h3>
+
+                    <p>
+                        Leadership conversations and media
+                        appearances featuring AYLI representatives.
+                    </p>
+
+                </div>
+
+
+                <div class="media-card">
+
+                    <div class="media-card-icon">
+                        02
+                    </div>
+
+                    <h3>
+                        Events & Activities
+                    </h3>
+
+                    <p>
+                        Visual stories and updates from AYLI events,
+                        programs and activities.
+                    </p>
+
+                </div>
+
+
+                <div class="media-card">
+
+                    <div class="media-card-icon">
+                        03
+                    </div>
+
+                    <h3>
+                        Youth Voices
+                    </h3>
+
+                    <p>
+                        Perspectives, ideas and experiences from
+                        young leaders within the AYLI community.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         NEWS CLOSING
+    =========================================== -->
+
+    <section class="news-closing">
+
+        <div class="news-closing-content">
+
+            <span class="section-label">
+                AFRICA YOUTH LEADERSHIP INSTITUTE
+            </span>
+
+            <h2>
+                Stay Connected With AYLI.
+            </h2>
+
+            <p>
+                Follow the Institute's journey as we develop
+                young leaders, strengthen communities and build
+                connections across Africa.
+            </p>
+
+            <a
+                href="alumni.html"
+                class="news-closing-button"
+            >
+                Explore AYLI Alumni
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         FOOTER
+    =========================================== -->
+
+    <footer class="site-footer">
+
+        <div class="footer-container">
+
+
+            <div class="footer-brand">
+
+                <img
+                    src="assets/logos/ayli-logo.png"
+                    alt="Africa Youth Leadership Institute Official Logo"
+                >
+
+                <h3>
+                    Africa Youth Leadership Institute
+                </h3>
+
+                <p>
+                    Developing young leaders for service,
+                    responsibility and positive impact.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    Explore
+                </h4>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="leadership.html">
+                    Leadership
+                </a>
+
+                <a href="programs.html">
+                    Programs
+                </a>
+
+                <a href="cohorts.html">
+                    Cohorts
+                </a>
+
+                <a href="chapters.html">
+                    Chapters
+                </a>
+
+                <a href="alumni.html">
+                    Alumni
+                </a>
+
+                <a href="news.html">
+                    News
+                </a>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    AYLI
+                </h4>
+
+                <a href="events.html">
+                    Events
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+                <a href="apply.html">
+                    Apply
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Africa Youth Leadership Institute.
+                All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ==========================================
+         NEWS ARTICLE MODAL
+    =========================================== -->
+
+    <div
+        id="newsArticleModal"
+        class="news-article-modal"
+    >
+
+        <div class="news-article-box">
+
+
+            <button
+                class="news-article-close"
+                onclick="closeNewsArticle()"
+                aria-label="Close article"
+            >
+                ×
+            </button>
+
+
+            <div id="articleCategory"></div>
+
+            <h2 id="articleTitle"></h2>
+
+            <div
+                id="articleMeta"
+                class="article-meta"
+            ></div>
+
+            <img
+                id="articleImage"
+                class="article-image"
+                style="display:none;"
+                alt=""
+            >
+
+            <div
+                id="articleContent"
+                class="article-content"
+            ></div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         SUPABASE
+    =========================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <script>
+
+        // =====================================================
+        // SUPABASE CONNECTION
+        // =====================================================
+
+        const SUPABASE_URL =
+            "https://jutxahzlecbbphgxlouy.supabase.co";
+
+
+        const SUPABASE_KEY =
+            "sb_publishable_3e7SrhjXjF6haRM7yWIv3A_XRj-nlYk";
+
+
+        const supabaseClient =
+            supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+
+        // =====================================================
+        // LOAD PUBLISHED NEWS
+        // =====================================================
+
+        async function loadPublishedNews() {
+
+            const featuredContainer =
+                document.getElementById(
+                    "featuredNewsContainer"
+                );
+
+
+            const newsGrid =
+                document.getElementById(
+                    "newsCardsGrid"
+                );
+
+
+            const announcementsContainer =
+                document.getElementById(
+                    "announcementsContainer"
+                );
+
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .from("website_news")
+                        .select("*")
+                        .eq(
+                            "status",
+                            "Published"
+                        )
+                        .order(
+                            "published_at",
+                            {
+                                ascending: false
+                            }
+                        );
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                const news =
+                    data || [];
+
+
+                // =================================================
+                // NO NEWS
+                // =================================================
+
+                if (
+                    news.length === 0
+                ) {
+
+                    featuredContainer.innerHTML = `
+                        <div class="dynamic-news-message">
+                            <h3>
+                                No published stories yet.
+                            </h3>
+
+                            <p>
+                                AYLI news and updates will appear here
+                                when officially published.
+                            </p>
+                        </div>
+                    `;
+
+
+                    newsGrid.innerHTML = `
+                        <div class="dynamic-news-message">
+                            <h3>
+                                No published news yet.
+                            </h3>
+
+                            <p>
+                                Official AYLI stories and updates will
+                                appear here.
+                            </p>
+                        </div>
+                    `;
+
+
+                    announcementsContainer.innerHTML = `
+                        <div class="announcement-status">
+
+                            <span>
+                                AYLI OFFICIAL UPDATES
+                            </span>
+
+                            <h3>
+                                Announcements will appear here.
+                            </h3>
+
+                            <p>
+                                Official announcements will be published
+                                by the Institute.
+                            </p>
+
+                        </div>
+                    `;
+
+
+                    return;
+
+                }
+
+
+                // =================================================
+                // FEATURED STORY
+                // =================================================
+
+                const featured =
+                    news[0];
+
+
+                featuredContainer.innerHTML =
+                    createFeaturedNews(
+                        featured
+                    );
+
+
+                // =================================================
+                // LATEST NEWS
+                // =================================================
+
+                /*
+                 * The first article is used as the featured story.
+                 * The remaining published stories appear in the
+                 * latest news grid.
+                 */
+
+                const latestNews =
+                    news.slice(
+                        1
+                    );
+
+
+                if (
+                    latestNews.length === 0
+                ) {
+
+                    newsGrid.innerHTML = `
+                        <div class="dynamic-news-message">
+
+                            <h3>
+                                More stories coming soon.
+                            </h3>
+
+                            <p>
+                                Additional AYLI news will appear here
+                                as it is officially published.
+                            </p>
+
+                        </div>
+                    `;
+
+                }
+                else {
+
+                    newsGrid.innerHTML =
+                        latestNews
+                            .map(
+                                function(item) {
+
+                                    return createNewsCard(
+                                        item
+                                    );
+
+                                }
+                            )
+                            .join("");
+
+                }
+
+
+                // =================================================
+                // ANNOUNCEMENTS
+                // =================================================
+
+                const announcements =
+                    news.filter(
+                        function(item) {
+
+                            return (
+                                item.category &&
+                                item.category.toLowerCase() ===
+                                "announcements"
+                            );
+
+                        }
+                    );
+
+
+                if (
+                    announcements.length === 0
+                ) {
+
+                    announcementsContainer.innerHTML = `
+                        <div class="announcement-status">
+
+                            <span>
+                                AYLI OFFICIAL UPDATES
+                            </span>
+
+                            <h3>
+                                Announcements will appear here.
+                            </h3>
+
+                            <p>
+                                Official announcements published by
+                                the Institute will appear here.
+                            </p>
+
+                        </div>
+                    `;
+
+                }
+                else {
+
+                    announcementsContainer.innerHTML =
+                        announcements
+                            .slice(
+                                0,
+                                5
+                            )
+                            .map(
+                                function(item) {
+
+                                    return createAnnouncement(
+                                        item
+                                    );
+
+                                }
+                            )
+                            .join("");
+
+                }
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Unable to load published news:",
+                    error
+                );
+
+
+                featuredContainer.innerHTML = `
+                    <div class="dynamic-news-message">
+
+                        <h3>
+                            News temporarily unavailable.
+                        </h3>
+
+                        <p>
+                            Please check back later.
+                        </p>
+
+                    </div>
+                `;
+
+
+                newsGrid.innerHTML = `
+                    <div class="dynamic-news-message">
+
+                        <h3>
+                            News temporarily unavailable.
+                        </h3>
+
+                        <p>
+                            Please check back later.
+                        </p>
+
+                    </div>
+                `;
+
+
+                announcementsContainer.innerHTML = `
+                    <div class="announcement-status">
+
+                        <span>
+                            AYLI OFFICIAL UPDATES
+                        </span>
+
+                        <h3>
+                            Announcements temporarily unavailable.
+                        </h3>
+
+                        <p>
+                            Please check back later.
+                        </p>
+
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // FEATURED NEWS
+        // =====================================================
+
+        function createFeaturedNews(
+            news
+        ) {
+
+            const image =
+                news.featured_image_url
+                    ? `
+                        <img
+                            src="${escapeAttribute(news.featured_image_url)}"
+                            alt="${escapeAttribute(news.title)}"
+                        >
+                      `
+                    : `
+                        <div class="news-image-placeholder">
+
+                            <span>
+                                AYLI FEATURED STORY
+                            </span>
+
+                        </div>
+                      `;
+
+
+            const excerpt =
+                news.excerpt ||
+                createExcerpt(
+                    news.content
+                );
+
+
+            return `
+
+                <div class="featured-news-image">
+
+                    ${image}
+
+                </div>
+
+
+                <div class="featured-news-content">
+
+                    <span class="news-category">
+                        ${escapeHtml(
+                            (news.category || "GENERAL").toUpperCase()
+                        )}
+                    </span>
+
+
+                    <span class="news-date">
+                        ${formatDate(news.published_at)}
+                    </span>
+
+
+                    <h3>
+                        ${escapeHtml(news.title)}
+                    </h3>
+
+
+                    <p>
+                        ${escapeHtml(excerpt)}
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="news-read-more"
+                        onclick="openNewsArticle('${news.id}'); return false;"
+                    >
+                        Read Story →
+                    </a>
+
+                </div>
+
+            `;
+
+        }
+
+
+        // =====================================================
+        // NEWS CARD
+        // =====================================================
+
+        function createNewsCard(
+            news
+        ) {
+
+            const image =
+                news.featured_image_url
+                    ? `
+                        <img
+                            src="${escapeAttribute(news.featured_image_url)}"
+                            alt="${escapeAttribute(news.title)}"
+                        >
+                      `
+                    : `
+                        <span>
+                            AYLI
+                        </span>
+                      `;
+
+
+            const excerpt =
+                news.excerpt ||
+                createExcerpt(
+                    news.content
+                );
+
+
+            return `
+
+                <article class="news-card">
+
+
+                    <div class="news-card-image">
+
+                        ${image}
+
+                    </div>
+
+
+                    <div class="news-card-body">
+
+
+                        <span class="news-category">
+                            ${escapeHtml(
+                                (news.category || "GENERAL").toUpperCase()
+                            )}
+                        </span>
+
+
+                        <span class="news-date">
+                            ${formatDate(news.published_at)}
+                        </span>
+
+
+                        <h3>
+                            ${escapeHtml(news.title)}
+                        </h3>
+
+
+                        <p>
+                            ${escapeHtml(excerpt)}
+                        </p>
+
+
+                        <a
+                            href="#"
+                            onclick="openNewsArticle('${news.id}'); return false;"
+                        >
+                            Read Story →
+                        </a>
+
+
+                    </div>
+
+
+                </article>
+
+            `;
+
+        }
+
+
+        // =====================================================
+        // ANNOUNCEMENT
+        // =====================================================
+
+        function createAnnouncement(
+            news
+        ) {
+
+            return `
+
+                <div class="announcement-item">
+
+
+                    <h3>
+                        ${escapeHtml(news.title)}
+                    </h3>
+
+
+                    <p>
+                        ${escapeHtml(
+                            news.excerpt ||
+                            createExcerpt(
+                                news.content
+                            )
+                        )}
+                    </p>
+
+
+                    <span class="announcement-date">
+                        Published ${formatDate(news.published_at)}
+                    </span>
+
+
+                    <br>
+
+
+                    <a
+                        href="#"
+                        onclick="openNewsArticle('${news.id}'); return false;"
+                    >
+                        Read Announcement →
+                    </a>
+
+
+                </div>
+
+            `;
+
+        }
+
+
+        // =====================================================
+        // OPEN FULL ARTICLE
+        // =====================================================
+
+        async function openNewsArticle(
+            id
+        ) {
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .from("website_news")
+                        .select("*")
+                        .eq(
+                            "id",
+                            id
+                        )
+                        .eq(
+                            "status",
+                            "Published"
+                        )
+                        .single();
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                document.getElementById(
+                    "articleCategory"
+                ).innerHTML = `
+
+                    <span class="news-category">
+
+                        ${escapeHtml(
+                            (data.category || "GENERAL").toUpperCase()
+                        )}
+
+                    </span>
+
+                `;
+
+
+                document.getElementById(
+                    "articleTitle"
+                ).textContent =
+                    data.title;
+
+
+                document.getElementById(
+                    "articleMeta"
+                ).textContent =
+                    buildArticleMeta(
+                        data
+                    );
+
+
+                const image =
+                    document.getElementById(
+                        "articleImage"
+                    );
+
+
+                if (
+                    data.featured_image_url
+                ) {
+
+                    image.src =
+                        data.featured_image_url;
+
+                    image.alt =
+                        data.title;
+
+                    image.style.display =
+                        "block";
+
+                }
+                else {
+
+                    image.style.display =
+                        "none";
+
+                }
+
+
+                document.getElementById(
+                    "articleContent"
+                ).textContent =
+                    data.content;
+
+
+                document.getElementById(
+                    "newsArticleModal"
+                ).classList.add(
+                    "active"
+                );
+
+
+                document.body.style.overflow =
+                    "hidden";
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Unable to open article:",
+                    error
+                );
+
+
+                alert(
+                    "Unable to open this news article."
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // CLOSE ARTICLE
+        // =====================================================
+
+        function closeNewsArticle() {
+
+            document.getElementById(
+                "newsArticleModal"
+            ).classList.remove(
+                "active"
+            );
+
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+        // =====================================================
+        // ARTICLE META
+        // =====================================================
+
+        function buildArticleMeta(
+            news
+        ) {
+
+            let meta =
+                "Published " +
+                formatDate(
+                    news.published_at
+                );
+
+
+            if (
+                news.author_name
+            ) {
+
+                meta +=
+                    " • " +
+                    news.author_name;
+
+            }
+
+
+            if (
+                news.author_office
+            ) {
+
+                meta +=
+                    " • " +
+                    news.author_office;
+
+            }
+
+
+            return meta;
+
+        }
+
+
+        // =====================================================
+        // EXCERPT
+        // =====================================================
+
+        function createExcerpt(
+            content
+        ) {
+
+            if (
+                !content
+            ) {
+
+                return "";
+
+            }
+
+
+            const cleanText =
+                String(
+                    content
+                )
+                .replace(
+                    /\s+/g,
+                    " "
+                )
+                .trim();
+
+
+            if (
+                cleanText.length <= 180
+            ) {
+
+                return cleanText;
+
+            }
+
+
+            return (
+                cleanText.substring(
+                    0,
+                    180
+                ) +
+                "..."
+            );
+
+        }
+
+
+        // =====================================================
+        // DATE
+        // =====================================================
+
+        function formatDate(
+            dateString
+        ) {
+
+            if (
+                !dateString
+            ) {
+
+                return "";
+
+            }
+
+
+            const date =
+                new Date(
+                    dateString
+                );
+
+
+            return date.toLocaleDateString(
+                "en-US",
+                {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                }
+            );
+
+        }
+
+
+        // =====================================================
+        // HTML SECURITY
+        // =====================================================
+
+        function escapeHtml(
+            value
+        ) {
+
+            return String(
+                value || ""
+            )
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+        }
+
+
+        function escapeAttribute(
+            value
+        ) {
+
+            return escapeHtml(
+                value
+            );
+
+        }
+
+
+        // =====================================================
+        // CLOSE MODAL WHEN CLICKING OUTSIDE
+        // =====================================================
+
+        document.getElementById(
+            "newsArticleModal"
+        ).addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === this
+                ) {
+
+                    closeNewsArticle();
+
+                }
+
+            }
+        );
+
+
+        // =====================================================
+        // ESC KEY
+        // =====================================================
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeNewsArticle();
+
+                }
+
+            }
+        );
+
+
+        // =====================================================
+        // MOBILE MENU
+        // =====================================================
+
+        const mobileMenuButton =
+            document.querySelector(
+                ".mobile-menu-button"
+            );
+
+
+        const navigation =
+            document.querySelector(
+                ".main-navigation"
+            );
+
+
+        if (
+            mobileMenuButton
+        ) {
+
+            mobileMenuButton.addEventListener(
+                "click",
+                function() {
+
+                    navigation.classList.toggle(
+                        "mobile-navigation-open"
+                    );
+
+                }
+            );
+
+        }
+
+
+        // =====================================================
+        // START
+        // =====================================================
+
+        loadPublishedNews();
+
+    </script>
+
+
+</body>
+
+</html>
