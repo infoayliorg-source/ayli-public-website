@@ -7447,3 +7447,28 @@ footer p {
     }
 
 }
+
+/* =====================================================
+   MOBILE APPLY NOW BUTTON
+   ===================================================== */
+
+@media (max-width: 850px) {
+
+    .header-container {
+        gap: 10px;
+    }
+
+    .header-apply {
+        display: inline-block !important;
+        padding: 9px 12px;
+        font-size: 10px;
+        border-radius: 4px;
+        white-space: nowrap;
+    }
+
+    .mobile-menu-button {
+        display: block;
+        flex-shrink: 0;
+    }
+
+}
