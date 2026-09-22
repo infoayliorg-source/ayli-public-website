@@ -7472,3 +7472,67 @@ footer p {
     }
 
 }
+/* ==================================================
+   AYLI STUDENT PORTAL BUTTON
+================================================== */
+
+.student-portal-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 9px 14px;
+    margin-left: 8px;
+
+    background: #0b3d91;
+    color: #ffffff !important;
+
+    border: 1px solid #0b3d91;
+    border-radius: 6px;
+
+    font-weight: 600;
+    font-size: 13px;
+
+    text-decoration: none !important;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* Hover effect */
+.student-portal-link:hover {
+    background: #f4b400;
+    color: #102a43 !important;
+
+    border-color: #f4b400;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ==================================================
+   MOBILE STUDENT PORTAL
+================================================== */
+
+@media (max-width: 768px) {
+
+    .student-portal-link {
+        display: flex;
+        width: 100%;
+
+        margin: 8px 0;
+        padding: 12px 16px;
+
+        justify-content: center;
+
+        font-size: 14px;
+        border-radius: 6px;
+    }
+
+}
