@@ -7633,51 +7633,189 @@ footer p {
   }
 
 }
-/* ==================================================
-   COUNTRY DIRECTOR PROFILE PHOTOS
-================================================== */
+/* =========================================================
+   AYLI COUNTRY DIRECTORATE — FINAL GRID FIX
+   ========================================================= */
 
-.country-director-photo {
-  width: 110px;
-  height: 110px;
-  margin: 0 auto 18px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid #f4b400;
-  background: #f5f5f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* COUNTRY DIRECTORS: 3 COLUMNS ON DESKTOP */
+.country-directorate .country-directors-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+    width: 100% !important;
+    align-items: stretch !important;
 }
 
-.country-director-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
+/* COUNTRY DIRECTOR CARDS */
+.country-directorate .country-director-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    padding: 30px !important;
+    text-align: center !important;
+}
+
+/* PROFILE PHOTO */
+.country-directorate .country-director-photo {
+    width: 110px !important;
+    height: 110px !important;
+    margin: 0 auto 18px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    border: 4px solid #d4af37 !important;
+    background: #f5f5f5 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.country-directorate .country-director-photo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+    display: block !important;
+}
+
+/* COUNTRY CODE */
+.country-directorate .country-code {
+    width: 58px !important;
+    height: 58px !important;
+    margin: 0 auto 18px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #d4af37 !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 15px !important;
+}
+
+/* COUNTRY NAME */
+.country-directorate .country-name {
+    text-align: center !important;
+    margin-bottom: 8px !important;
+}
+
+/* DIRECTOR NAME */
+.country-directorate .country-director-card h3 {
+    text-align: center !important;
+    margin-bottom: 8px !important;
+}
+
+/* POSITION */
+.country-directorate .country-director-card p {
+    text-align: center !important;
+}
+
+/* EMAIL */
+.country-directorate .chapter-contact {
+    text-align: center !important;
+    margin-top: 12px !important;
+}
+
+.country-directorate .chapter-contact a {
+    color: #0b3d91 !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    word-break: break-word !important;
+}
+
+.country-directorate .chapter-contact a:hover {
+    color: #d4af37 !important;
+    text-decoration: underline !important;
 }
 
 
-/* Keep country director cards balanced */
+/* =========================================================
+   TABLET — 2 COLUMNS
+   ========================================================= */
 
+@media (max-width: 900px) {
+    .country-directorate .country-directors-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+
+/* =========================================================
+   MOBILE — 1 COLUMN
+   ========================================================= */
+
+@media (max-width: 600px) {
+    .country-directorate .country-directors-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .country-directorate .country-director-card {
+        padding: 25px 20px !important;
+    }
+
+    .country-directorate .country-director-photo {
+        width: 95px !important;
+        height: 95px !important;
+    }
+}
+/* =========================================================
+   AYLI COUNTRY DIRECTORS — FINAL 3 COLUMN OVERRIDE
+   ========================================================= */
+
+.country-directorate .country-directors-grid,
+.country-directors-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    align-items: stretch !important;
+}
+
+/* Keep every director card inside its grid column */
+.country-directorate .country-director-card,
 .country-director-card {
-  text-align: center;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+    display: block !important;
 }
 
-.country-director-card > div:last-child {
-  text-align: center;
+/* Keep photos properly sized */
+.country-directorate .country-director-photo,
+.country-director-photo {
+    width: 110px !important;
+    height: 110px !important;
+    margin: 0 auto 18px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
 }
 
+.country-directorate .country-director-photo img,
+.country-director-photo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+    display: block !important;
+}
 
-/* Mobile */
+/* =========================================================
+   IMPORTANT:
+   FORCE 3 COLUMNS EVEN WHEN OLD RESPONSIVE RULES EXIST
+   ========================================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .country-directorate .country-directors-grid,
+    .country-directors-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
 
-  .country-director-photo {
-    width: 95px;
-    height: 95px;
-    margin-bottom: 16px;
-  }
-
+@media (max-width: 600px) {
+    .country-directorate .country-directors-grid,
+    .country-directors-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
 }
