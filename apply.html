@@ -515,43 +515,79 @@
                     </div>
 
 
-                    <div class="form-group">
 
-                        <label for="country">
-                            Country of Residence
-                            <span class="required">*</span>
-                        </label>
+<div class="form-group">
 
-                        <input
-                            type="text"
-                            id="country"
-                            name="country"
-                            required
-                        >
+    <label for="country">
+        Country of Residence
+        <span class="required">*</span>
+    </label>
 
-                    </div>
+    <input
+        type="text"
+        id="country"
+        name="country"
+        list="ayli-countries"
+        placeholder="Type or select your country"
+        autocomplete="country-name"
+        required
+    >
 
+    <datalist id="ayli-countries">
+        <option value="Liberia">
+        <option value="The Gambia">
+        <option value="Sierra Leone">
+        <option value="Ghana">
+        <option value="Nigeria">
+        <option value="Guinea">
+        <option value="Senegal">
+        <option value="Côte d'Ivoire">
+        <option value="Guinea-Bissau">
+        <option value="Other">
+    </datalist>
 
-                    <div class="form-group">
+    <div id="registrationFeeNotice" style="display: none; margin-top: 12px; padding: 12px; border: 1px solid #ddd; border-radius: 6px;">
+        <strong>Registration Fee Notice</strong>
+        <p>
+            If you are selected for admission to AYLI Cohort 13,
+            you will be required to pay the applicable country-specific
+            registration fee to confirm your participation.
+        </p>
+        <p>
+            <strong>Applicable registration fee:</strong>
+            <span id="registrationFeeAmount"></span>
+        </p>
+    </div>
 
-                        <label for="city">
-                            City
-                            <span class="required">*</span>
-                        </label>
+    <div id="registrationAgreement" style="display: none; margin-top: 12px;">
+        <p>
+            Do you agree to pay the applicable registration fee
+            if you are selected for admission?
+            <span class="required">*</span>
+        </p>
 
-                        <input
-                            type="text"
-                            id="city"
-                            name="city"
-                            required
-                        >
+        <label>
+            <input
+                type="radio"
+                name="feeAgreement"
+                value="Yes"
+                required
+            >
+            Yes, I agree.
+        </label>
 
-                    </div>
+        <label style="margin-left: 12px;">
+            <input
+                type="radio"
+                name="feeAgreement"
+                value="No"
+                required
+            >
+            No, I do not agree.
+        </label>
+    </div>
 
-
-                </div>
-
-            </div>
+</div>
 
 
             <!-- =================================================
@@ -767,9 +803,9 @@
                                 Cohort 12
                             </option>
 
-                            <option value="Future Cohort">
-                                Future Cohort
-                            </option>
+                            <option value="Cohort 13">
+    Cohort 13
+</option>
 
                         </select>
 
@@ -1126,7 +1162,7 @@
     <div class="footer-bottom">
 
         <p>
-            © 2026 Africa Youth Leadership Institute.
+          &copy; 2026 Africa Youth Leadership Institute.
             All Rights Reserved.
         </p>
 
@@ -1538,6 +1574,88 @@
             }
         );
 
+
+    // ======================================================
+    // COHORT 13: COUNTRY-BASED REGISTRATION FEES
+    // ======================================================
+
+    const countryField = document.getElementById("country");
+    const feeNotice = document.getElementById("registrationFeeNotice");
+    const feeAmount = document.getElementById("registrationFeeAmount");
+    const feeAgreement = document.getElementById("registrationAgreement");
+
+    if (countryField && feeNotice && feeAmount && feeAgreement) {
+
+        const agreementRadios = feeAgreement.querySelectorAll(
+            'input[name="feeAgreement"]'
+        );
+
+        function updateRegistrationFee() {
+            const country = countryField.value.trim().toLowerCase();
+
+            if (!country) {
+                feeNotice.style.display = "none";
+                feeAgreement.style.display = "none";
+
+                agreementRadios.forEach(function (radio) {
+                    radio.required = false;
+                    radio.checked = false;
+                });
+
+                return;
+            }
+
+            let fee = "USD 5";
+
+            if (
+                country === "liberia"
+            ) {
+                fee = "LD 1,500";
+            } else if (
+                country === "gambia" ||
+                country === "the gambia"
+            ) {
+                fee = "100 Dalasi (GMD)";
+            }
+
+            feeAmount.textContent = fee;
+            feeNotice.style.display = "block";
+            feeAgreement.style.display = "block";
+
+            agreementRadios.forEach(function (radio) {
+                radio.required = true;
+            });
+        }
+
+        countryField.addEventListener("input", updateRegistrationFee);
+        countryField.addEventListener("change", updateRegistrationFee);
+
+        // Do not allow an applicant who selects "No" to submit.
+        const applicationForm = countryField.closest("form");
+
+        if (applicationForm) {
+            applicationForm.addEventListener("submit", function (event) {
+                const selectedAgreement = feeAgreement.querySelector(
+                    'input[name="feeAgreement"]:checked'
+                );
+
+                if (
+                    selectedAgreement &&
+                    selectedAgreement.value === "No"
+                ) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+
+                    alert(
+    "You must agree to the applicable registration fee " +
+    "to proceed with the Cohort 13 application."
+);
+                }
+            }, true);
+        }
+
+        updateRegistrationFee();
+    }
 
     // ======================================================
     // START
