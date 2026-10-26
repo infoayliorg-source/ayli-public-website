@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AYLI Cohort 12 Honors</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #17345b;
+    }
+    header {
+      background: #123b70;
+      color: white;
+      padding: 35px 20px;
+      text-align: center;
+    }
+    header h1 { margin: 0 0 10px; }
+    header p { margin: 0; }
+    main { max-width: 1000px; margin: 30px auto; padding: 0 16px; }
+    .intro, .honors-card {
+      background: white;
+      border-radius: 10px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px #142b4810;
+    }
+    .note { color: #52657e; line-height: 1.6; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td {
+      padding: 13px;
+      border-bottom: 1px solid #e4e9f0;
+      text-align: left;
+    }
+    th { background: #eef4fc; }
+    .status { color: #187044; font-weight: bold; }
+    #message { padding: 12px 0; }
+    footer { text-align: center; padding: 25px; color: #52657e; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AYLI Cohort 12 Honors</h1>
+    <p>Africa Youth Leadership Institute</p>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>Official Honors Recognition</h2>
+      <p class="note">
+        This page recognizes Cohort 12 students whose academic records
+        have been verified, whose honors have been approved, and whose
+        publication has been authorized by AYLI.
+      </p>
+    </section>
+
+    <section class="honors-card">
+      <h2>Published Honors List</h2>
+      <div id="message" role="status">Loading published records...</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>AYLI ID</th>
+              <th>Student Name</th>
+              <th>Chapter</th>
+              <th>Average</th>
+            </tr>
+          </thead>
+          <tbody id="honorsBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Africa Youth Leadership Institute
+  </footer>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const db = createClient(
+      "https://jutxahzlecbbphgxlouy.supabase.co",
+      "sb_publishable_3e7SrhjXjF6haRM7yWIv3A_XRj-nlYk"
+    );
+
+    const message = document.getElementById("message");
+    const body = document.getElementById("honorsBody");
+
+    async function loadHonors() {
+     const { data, error } = await db
+  .rpc("get_cohort12_public_honors");
+
+if (!error && data) {
+  data.sort(
+    (a, b) =>
+      Number(b.provisional_average) -
+      Number(a.provisional_average)
+  );
+}
+      if (error) {
+        message.textContent =
+          "The honors list could not be loaded. Please try again later.";
+        console.error("AYLI public honors error:", error.message);
+        return;
+      }
+
+      body.replaceChildren();
+
+      if (!data || data.length === 0) {
+        message.textContent = "No honors records have been published yet.";
+        return;
+      }
+
+      message.textContent = `${data.length} published honors record(s).`;
+
+      data.forEach((student, index) => {
+        const tr = document.createElement("tr");
+
+        [
+          String(index + 1),
+          student.ayli_id ?? "",
+          student.student_name ?? "",
+          student.chapter ?? "",
+          Number(student.provisional_average).toFixed(2)
+        ].forEach(value => {
+          const td = document.createElement("td");
+          td.textContent = value;
+          tr.appendChild(td);
+        });
+
+        body.appendChild(tr);
+      });
+    }
+
+    loadHonors();
+  </script>
+</body>
+</html>
