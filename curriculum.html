@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AYLI Curriculum | Africa Youth Leadership Institute</title>
+  <meta name="description" content="Explore published AYLI curricula and course outlines.">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #243247;
+      background: #f5f7fa;
+      line-height: 1.6;
+    }
+    header {
+      background: #123c70;
+      color: white;
+      padding: 28px 18px;
+      text-align: center;
+    }
+    header h1 { margin: 0 0 8px; }
+    header p { margin: 0; }
+    nav {
+      background: #fff;
+      padding: 14px;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    nav a {
+      color: #123c70;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 10px;
+    }
+    main {
+      max-width: 1050px;
+      margin: 28px auto;
+      padding: 0 18px;
+    }
+    .intro, .document, .notice {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    input, select {
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      font-size: 15px;
+      background: white;
+    }
+    input { flex: 1; min-width: 220px; }
+    select { min-width: 180px; }
+    .document h2 { color: #123c70; margin-top: 0; }
+    .meta { color: #64748b; font-size: 14px; }
+    .status { color: #166534; font-weight: bold; }
+    .empty { text-align: center; padding: 30px; color: #64748b; }
+    footer {
+      text-align: center;
+      padding: 24px 15px;
+      color: #64748b;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AYLI Curriculum</h1>
+    <p>Africa Youth Leadership Institute</p>
+    <p>Building a New Generation of Ethical, Competent, and Transformational African Leaders</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="library.html">Digital Library</a>
+    <a href="curriculum.html">Curriculum</a>
+  </nav>
+
+  <main>
+    <section class="intro">
+      <h2>Curriculum and Course Outlines</h2>
+      <p>
+        Explore curriculum documents and course outlines officially published
+        by the Africa Youth Leadership Institute.
+      </p>
+      <p class="meta">
+        Only documents approved for publication appear on this page.
+      </p>
+    </section>
+
+    <div class="controls">
+      <input id="searchInput" type="search"
+        placeholder="Search by title, cohort, or academic year..."
+        aria-label="Search curriculum documents">
+
+      <select id="categoryFilter" aria-label="Filter by category">
+        <option value="">All curriculum documents</option>
+        <option value="Curriculum">Curriculum</option>
+        <option value="Course Outlines">Course Outlines</option>
+      </select>
+    </div>
+
+    <div id="message" class="notice">Loading published curriculum documents...</div>
+    <section id="documents" aria-live="polite"></section>
+
+    <section class="notice">
+      <strong>Document access:</strong>
+      Secure PDF downloads are not yet enabled. The documents listed here
+      display published information only while the private-file download
+      service is being configured.
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Africa Youth Leadership Institute (AYLI).
+    All rights reserved.
+  </footer>
+
+  <script>
+    const SUPABASE_URL = "https://jutxahzlecbbphgxlouy.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_3e7SrhjXjF6haRM7yWIv3A_XRj-nlYk";
+
+    const documentsElement = document.getElementById("documents");
+    const messageElement = document.getElementById("message");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    let curriculumDocuments = [];
+
+    function safeText(value) {
+      return String(value ?? "");
+    }
+
+    function createTextElement(tag, className, value) {
+      const element = document.createElement(tag);
+      if (className) element.className = className;
+      element.textContent = safeText(value);
+      return element;
+    }
+
+    function renderDocuments() {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      const category = categoryFilter.value;
+
+      const filtered = curriculumDocuments.filter(doc => {
+        const searchable = [
+          doc.title,
+          doc.description,
+          doc.author,
+          doc.cohort,
+          doc.academic_year,
+          doc.category
+        ].map(safeText).join(" ").toLowerCase();
+
+        const isCategoryMatch = !category || doc.category === category;
+        return isCategoryMatch && searchable.includes(searchTerm);
+      });
+
+      documentsElement.replaceChildren();
+
+      if (filtered.length === 0) {
+        documentsElement.appendChild(
+          createTextElement("div", "empty",
+            curriculumDocuments.length
+              ? "No documents match your search."
+              : "No curriculum documents have been published yet.")
+        );
+        return;
+      }
+
+      filtered.forEach(doc => {
+        const card = document.createElement("article");
+        card.className = "document";
+
+        card.appendChild(createTextElement("h2", "", doc.title));
+
+        if (doc.description) {
+          card.appendChild(createTextElement("p", "", doc.description));
+        }
+
+        card.appendChild(createTextElement(
+          "p", "meta",
+          "Category: " + safeText(doc.category)
+        ));
+
+        if (doc.cohort) {
+          card.appendChild(createTextElement(
+            "p", "meta", "Cohort: " + safeText(doc.cohort)
+          ));
+        }
+
+        if (doc.academic_year) {
+          card.appendChild(createTextElement(
+            "p", "meta", "Academic Year: " + safeText(doc.academic_year)
+          ));
+        }
+
+        if (doc.author) {
+          card.appendChild(createTextElement(
+            "p", "meta", "Author: " + safeText(doc.author)
+          ));
+        }
+
+        if (doc.published_at) {
+          const date = new Date(doc.published_at);
+          if (!Number.isNaN(date.getTime())) {
+            card.appendChild(createTextElement(
+              "p", "meta", "Published: " + date.toLocaleDateString()
+            ));
+          }
+        }
+
+        card.appendChild(createTextElement("p", "status", "Officially published"));
+        documentsElement.appendChild(card);
+      });
+    }
+
+    async function loadDocuments() {
+      try {
+        const response = await fetch(
+          SUPABASE_URL + "/rest/v1/rpc/get_ayli_published_library_documents",
+          {
+            method: "POST",
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": "Bearer " + SUPABASE_KEY,
+              "Content-Type": "application/json"
+            },
+            body: "{}"
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("The database returned HTTP " + response.status);
+        }
+
+        const result = await response.json();
+
+        curriculumDocuments = (Array.isArray(result) ? result : []).filter(doc =>
+          doc.category === "Curriculum" ||
+          doc.category === "Course Outlines"
+        );
+
+        messageElement.textContent =
+          "Published curriculum documents: " + curriculumDocuments.length;
+
+        renderDocuments();
+      } catch (error) {
+        console.error("AYLI curriculum loading error:", error);
+        messageElement.textContent =
+          "We could not load the curriculum documents. Please try again later.";
+      }
+    }
+
+    searchInput.addEventListener("input", renderDocuments);
+    categoryFilter.addEventListener("change", renderDocuments);
+
+    loadDocuments();
+  </script>
+</body>
+</html>
