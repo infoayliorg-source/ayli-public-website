@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore research works, academic publications, and reports from the Africa Youth Leadership Institute.">
+  <title>Digital Library | AYLI</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #203047;
+      background: #f5f7fb;
+      line-height: 1.6;
+    }
+    header {
+      background: #123b70;
+      color: white;
+      padding: 32px 20px;
+      text-align: center;
+    }
+    header h1 { margin: 0 0 8px; }
+    header p { margin: 0; }
+    nav {
+      background: #fff;
+      padding: 14px 20px;
+      text-align: center;
+      border-bottom: 1px solid #e0e6ef;
+    }
+    nav a {
+      color: #123b70;
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1050px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+    .intro, .document {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px #0000000b;
+    }
+    .intro h2 { margin-top: 0; color: #123b70; }
+    .filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: white;
+      font-size: 15px;
+    }
+    .category {
+      color: #123b70;
+      font-weight: bold;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    .document h3 { margin: 8px 0; color: #123b70; }
+    .meta { color: #637187; font-size: 14px; }
+    .status { padding: 18px; text-align: center; color: #52657c; }
+    .error { color: #9d2929; }
+    .download-note {
+      background: #edf3fb;
+      border-left: 4px solid #123b70;
+      padding: 12px 16px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    footer {
+      margin-top: 40px;
+      padding: 22px;
+      background: #123b70;
+      color: white;
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .filters { grid-template-columns: 1fr; }
+      nav a { display: inline-block; margin: 5px 8px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>AYLI Digital Library</h1>
+  <p>Research, knowledge, and academic resources for African leadership.</p>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="library.html">Digital Library</a>
+  <a href="curriculum.html">Curriculum</a>
+</nav>
+
+<main>
+  <section class="intro">
+    <h2>Explore Our Academic Resources</h2>
+    <p>
+      Browse published research works, academic publications, institutional
+      reports, and other resources made available by the Africa Youth
+      Leadership Institute.
+    </p>
+  </section>
+
+  <div class="download-note">
+    Browse the published collection below. Secure PDF download links will be
+    enabled after the private-file download service is configured.
+  </div>
+
+  <div class="filters">
+    <input id="search" type="search"
+      placeholder="Search by title, author, or description"
+      aria-label="Search documents">
+    <select id="category" aria-label="Filter by category">
+      <option value="">All categories</option>
+      <option value="Research Works">Research Works</option>
+      <option value="Academic Publications">Academic Publications</option>
+      <option value="Reports">Reports</option>
+      <option value="Other Documents">Other Documents</option>
+    </select>
+  </div>
+
+  <div id="status" class="status" role="status" aria-live="polite">
+    Loading published documents…
+  </div>
+  <section id="documents" aria-label="Published documents"></section>
+</main>
+
+<footer>
+  <p>Africa Youth Leadership Institute (AYLI)</p>
+  <p>Building a New Generation of Ethical, Competent, and Transformational African Leaders</p>
+</footer>
+
+<script>
+const SUPABASE_URL = "https://jutxahzlecbbphgxlouy.supabase.co";
+const SUPABASE_KEY = "sb_publishable_3e7SrhjXjF6haRM7yWIv3A_XRj-nlYk";
+const documentsBox = document.getElementById("documents");
+const statusBox = document.getElementById("status");
+let allDocuments = [];
+
+function makeElement(tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (text !== undefined) element.textContent = text;
+  return element;
+}
+
+function renderDocuments() {
+  const term = document.getElementById("search").value.trim().toLowerCase();
+  const category = document.getElementById("category").value;
+
+  const filtered = allDocuments.filter(doc => {
+    const searchable = [
+      doc.title, doc.description, doc.author, doc.category,
+      doc.cohort, doc.academic_year
+    ].filter(Boolean).join(" ").toLowerCase();
+
+    return searchable.includes(term) &&
+      (!category || doc.category === category);
+  });
+
+  documentsBox.replaceChildren();
+
+  if (!filtered.length) {
+    statusBox.hidden = false;
+    statusBox.textContent = allDocuments.length
+      ? "No documents match your search."
+      : "No documents have been published yet.";
+    return;
+  }
+
+  statusBox.hidden = true;
+
+  for (const doc of filtered) {
+    const card = makeElement("article", "document");
+    card.appendChild(makeElement("div", "category", doc.category));
+    card.appendChild(makeElement("h3", "", doc.title));
+
+    if (doc.description) {
+      card.appendChild(makeElement("p", "", doc.description));
+    }
+
+    const details = [];
+    if (doc.author) details.push("By " + doc.author);
+    if (doc.cohort) details.push(doc.cohort);
+    if (doc.academic_year) details.push("Academic year " + doc.academic_year);
+
+    if (details.length) {
+      card.appendChild(makeElement("p", "meta", details.join(" · ")));
+    }
+
+    if (doc.published_at) {
+      const date = new Date(doc.published_at);
+      if (!Number.isNaN(date.getTime())) {
+        card.appendChild(makeElement(
+          "p", "meta", "Published " + date.toLocaleDateString()
+        ));
+      }
+    }
+
+    card.appendChild(makeElement(
+      "p", "meta", "PDF download access will be available here once enabled."
+    ));
+
+    documentsBox.appendChild(card);
+  }
+}
+
+async function loadDocuments() {
+  statusBox.hidden = false;
+  statusBox.className = "status";
+  statusBox.textContent = "Loading published documents…";
+
+  try {
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/rpc/get_ayli_published_library_documents",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + SUPABASE_KEY
+        },
+        body: "{}"
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("The published library could not be loaded.");
+    }
+
+    const data = await response.json();
+    allDocuments = Array.isArray(data) ? data : [];
+    renderDocuments();
+  } catch (error) {
+    console.error("Public library error:", error);
+    statusBox.hidden = false;
+    statusBox.className = "status error";
+    statusBox.textContent =
+      "We could not load the library right now. Please try again later.";
+  }
+}
+
+document.getElementById("search").addEventListener("input", renderDocuments);
+document.getElementById("category").addEventListener("change", renderDocuments);
+loadDocuments();
+</script>
+</body>
+</html>
