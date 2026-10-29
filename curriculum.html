@@ -223,8 +223,51 @@
           }
         }
 
-        card.appendChild(createTextElement("p", "status", "Officially published"));
-        documentsElement.appendChild(card);
+        
+card.appendChild(createTextElement("p", "status", "Officially published"));
+
+const downloadButton = document.createElement("button");
+downloadButton.textContent = "Download PDF";
+downloadButton.type = "button";
+downloadButton.style.cssText =
+  "background:#123c70;color:white;padding:10px 16px;border:0;border-radius:6px;cursor:pointer;font-weight:bold;";
+
+downloadButton.addEventListener("click", async () => {
+  downloadButton.disabled = true;
+  downloadButton.textContent = "Preparing download...";
+
+  try {
+    const response = await fetch(
+      SUPABASE_URL + "/functions/v1/ayli-secure-download",
+      {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + SUPABASE_KEY,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ document_id: doc.id })
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result.download_url) {
+      throw new Error(result.error || "Download could not be prepared.");
+    }
+
+    window.location.href = result.download_url;
+  } catch (error) {
+    alert(error.message || "Unable to download this document.");
+  } finally {
+    downloadButton.disabled = false;
+    downloadButton.textContent = "Download PDF";
+  }
+});
+
+card.appendChild(downloadButton);
+documentsElement.appendChild(card);
+
       });
     }
 
