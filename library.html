@@ -42,7 +42,7 @@
     }
 
     main {
-      max-width: 1050px;
+      max-width: 1100px;
       margin: 30px auto;
       padding: 0 18px;
     }
@@ -73,14 +73,113 @@
       font-size: 15px;
     }
 
+    .document-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .document {
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 0;
+    }
+
+    .cover-frame {
+      height: 265px;
+      background: #edf2f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid #e0e6ef;
+    }
+
+    .cover-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #edf2f8;
+    }
+
+    .cover-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(145deg, #123b70, #1e5794);
+    }
+
+    .placeholder-mark {
+      width: 64px;
+      height: 64px;
+      border: 2px solid #ffffffb8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    .placeholder-name {
+      font-size: 21px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .placeholder-caption {
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-top: 5px;
+    }
+
+    .placeholder-rule {
+      width: 60px;
+      height: 3px;
+      background: #d8b66a;
+      margin: 16px 0;
+    }
+
+    .placeholder-title {
+      font-size: 14px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+      max-width: 100%;
+    }
+
+    .document-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
     .category {
       color: #123b70;
       font-weight: bold;
-      font-size: 13px;
+      font-size: 12px;
       text-transform: uppercase;
+      letter-spacing: .5px;
     }
 
-    .document h3 { margin: 8px 0; color: #123b70; }
+    .document h3 {
+      margin: 8px 0;
+      color: #123b70;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
     .meta { color: #637187; font-size: 14px; }
 
     .status {
@@ -100,16 +199,17 @@
     }
 
     .download-button {
-      display: inline-block;
+      display: block;
+      width: 100%;
       background: #123b70;
       color: white;
-      padding: 10px 16px;
+      padding: 11px 16px;
       border: 0;
       border-radius: 6px;
       cursor: pointer;
       font-size: 15px;
       font-weight: bold;
-      margin-top: 8px;
+      margin-top: auto;
     }
 
     .download-button:hover { background: #0b2b52; }
@@ -130,6 +230,7 @@
     @media (max-width: 600px) {
       .filters { grid-template-columns: 1fr; }
       nav a { display: inline-block; margin: 5px 8px; }
+      .cover-frame { height: 245px; }
     }
   </style>
 </head>
@@ -157,20 +258,25 @@
   </section>
 
   <div class="download-note">
-    Browse published resources and select Download PDF to access an available
-    document. Download links are temporary and securely generated when requested.
+    Browse published resources and select Download PDF to access a document.
+    Download links are temporary and securely generated when requested.
   </div>
 
   <div class="filters">
-    <input id="search" type="search"
+    <input
+      id="search"
+      type="search"
       placeholder="Search by title, author, or description"
-      aria-label="Search documents">
+      aria-label="Search documents"
+    >
 
     <select id="category" aria-label="Filter by category">
       <option value="">All categories</option>
       <option value="Research Works">Research Works</option>
       <option value="Academic Publications">Academic Publications</option>
       <option value="Reports">Reports</option>
+      <option value="Curriculum">Curriculum</option>
+      <option value="Course Outlines">Course Outlines</option>
       <option value="Other Documents">Other Documents</option>
     </select>
   </div>
@@ -179,7 +285,11 @@
     Loading published documents…
   </div>
 
-  <section id="documents" aria-label="Published documents"></section>
+  <section
+    id="documents"
+    class="document-grid"
+    aria-label="Published documents"
+  ></section>
 </main>
 
 <footer>
@@ -190,11 +300,14 @@
 <script>
 const SUPABASE_URL = "https://jutxahzlecbbphgxlouy.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3e7SrhjXjF6haRM7yWIv3A_XRj-nlYk";
+const DOWNLOAD_FUNCTION = SUPABASE_URL + "/functions/v1/ayli-secure-download";
 
 const documentsBox = document.getElementById("documents");
 const statusBox = document.getElementById("status");
 
 let allDocuments = [];
+const coverUrlCache = new Map();
+const coverRequests = new Map();
 
 function makeElement(tag, className, text) {
   const element = document.createElement(tag);
@@ -205,36 +318,116 @@ function makeElement(tag, className, text) {
   return element;
 }
 
-async function downloadDocument(doc, button) {
-  const originalText = "Download PDF";
+function makeCoverPlaceholder(title) {
+  const placeholder = makeElement("div", "cover-placeholder");
+  placeholder.setAttribute("role", "img");
+  placeholder.setAttribute(
+    "aria-label",
+    "AYLI placeholder cover for " + (title || "document")
+  );
 
+  placeholder.appendChild(
+    makeElement("div", "placeholder-mark", "A")
+  );
+
+  placeholder.appendChild(
+    makeElement("div", "placeholder-name", "AYLI")
+  );
+
+  placeholder.appendChild(
+    makeElement("div", "placeholder-caption", "DIGITAL LIBRARY")
+  );
+
+  placeholder.appendChild(
+    makeElement("div", "placeholder-rule")
+  );
+
+  placeholder.appendChild(
+    makeElement("div", "placeholder-title", title || "Academic Resource")
+  );
+
+  return placeholder;
+}
+
+async function requestDocumentLinks(documentId) {
+  if (!documentId) return null;
+
+  if (coverUrlCache.has(documentId)) {
+    return coverUrlCache.get(documentId);
+  }
+
+  if (coverRequests.has(documentId)) {
+    return coverRequests.get(documentId);
+  }
+
+  const request = (async () => {
+    const response = await fetch(DOWNLOAD_FUNCTION, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ document_id: documentId })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || "Could not retrieve document links.");
+    }
+
+    coverUrlCache.set(documentId, result);
+    return result;
+  })();
+
+  coverRequests.set(documentId, request);
+
+  try {
+    return await request;
+  } finally {
+    coverRequests.delete(documentId);
+  }
+}
+
+async function loadCover(doc, frame) {
+  if (!doc.id) return;
+
+  try {
+    const result = await requestDocumentLinks(doc.id);
+
+    if (!frame.isConnected) return;
+
+    if (result && result.cover_url) {
+      const image = makeElement("img", "cover-image");
+      image.alt = "Cover: " + (doc.title || "AYLI document");
+      image.loading = "lazy";
+      image.src = result.cover_url;
+
+      image.addEventListener("error", () => {
+        image.replaceWith(makeCoverPlaceholder(doc.title));
+      }, { once: true });
+
+      frame.replaceChildren(image);
+    }
+  } catch (error) {
+    // If cover retrieval fails, keep the branded placeholder.
+    console.warn("Cover image unavailable for document:", doc.id, error);
+  }
+}
+
+async function downloadDocument(doc, button) {
   button.disabled = true;
   button.textContent = "Preparing download...";
 
   try {
-    const response = await fetch(
-      SUPABASE_URL + "/functions/v1/ayli-secure-download",
-      {
-        method: "POST",
-        headers: {
-          "apikey": SUPABASE_KEY,
-          "Authorization": "Bearer " + SUPABASE_KEY,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ document_id: doc.id })
-      }
-    );
+    const result = await requestDocumentLinks(doc.id);
 
-    const result = await response.json();
-
-    if (!response.ok || !result.download_url) {
-      throw new Error(
-        result.error || "Download could not be prepared."
-      );
+    if (!result || !result.download_url) {
+      throw new Error("Download could not be prepared.");
     }
 
     window.location.href = result.download_url;
-
   } catch (error) {
     console.error("Document download error:", error);
 
@@ -243,7 +436,7 @@ async function downloadDocument(doc, button) {
     );
   } finally {
     button.disabled = false;
-    button.textContent = originalText;
+    button.textContent = "Download PDF";
   }
 }
 
@@ -281,26 +474,35 @@ function renderDocuments() {
   for (const doc of filtered) {
     const card = makeElement("article", "document");
 
-    card.appendChild(
+    const coverFrame = makeElement("div", "cover-frame");
+    coverFrame.appendChild(makeCoverPlaceholder(doc.title));
+    card.appendChild(coverFrame);
+
+    const content = makeElement("div", "document-content");
+
+    content.appendChild(
       makeElement("div", "category", doc.category || "Resource")
     );
 
-    card.appendChild(makeElement("h3", "", doc.title || "Untitled document"));
+    content.appendChild(
+      makeElement("h3", "", doc.title || "Untitled document")
+    );
 
     if (doc.description) {
-      card.appendChild(makeElement("p", "", doc.description));
+      content.appendChild(makeElement("p", "", doc.description));
     }
 
     const details = [];
 
     if (doc.author) details.push("By " + doc.author);
     if (doc.cohort) details.push(doc.cohort);
+
     if (doc.academic_year) {
       details.push("Academic year " + doc.academic_year);
     }
 
     if (details.length) {
-      card.appendChild(
+      content.appendChild(
         makeElement("p", "meta", details.join(" · "))
       );
     }
@@ -309,12 +511,8 @@ function renderDocuments() {
       const date = new Date(doc.published_at);
 
       if (!Number.isNaN(date.getTime())) {
-        card.appendChild(
-          makeElement(
-            "p",
-            "meta",
-            "Published " + date.toLocaleDateString()
-          )
+        content.appendChild(
+          makeElement("p", "meta", "Published " + date.toLocaleDateString())
         );
       }
     }
@@ -330,8 +528,12 @@ function renderDocuments() {
       downloadDocument(doc, downloadButton);
     });
 
-    card.appendChild(downloadButton);
+    content.appendChild(downloadButton);
+    card.appendChild(content);
     documentsBox.appendChild(card);
+
+    // The placeholder appears immediately; a cover replaces it if available.
+    loadCover(doc, coverFrame);
   }
 }
 
@@ -362,7 +564,6 @@ async function loadDocuments() {
     allDocuments = Array.isArray(data) ? data : [];
 
     renderDocuments();
-
   } catch (error) {
     console.error("Public library error:", error);
 
