@@ -1646,87 +1646,136 @@
         );
 
 
-    // ======================================================
-    // COHORT 13: COUNTRY-BASED REGISTRATION FEES
-    // ======================================================
+   // ======================================================
+// COHORT 13: COUNTRY-BASED REGISTRATION FEES
+// ======================================================
 
-    const countryField = document.getElementById("country");
-    const feeNotice = document.getElementById("registrationFeeNotice");
-    const feeAmount = document.getElementById("registrationFeeAmount");
-    const feeAgreement = document.getElementById("registrationAgreement");
+const countryField = document.getElementById("country");
+const learningModeField = document.getElementById("learningMode");
+const cohortField = document.getElementById("cohort");
 
-    if (countryField && feeNotice && feeAmount && feeAgreement) {
+const feeNotice = document.getElementById("registrationFeeNotice");
+const feeAmount = document.getElementById("registrationFeeAmount");
+const feeAgreement = document.getElementById("registrationAgreement");
 
-        const agreementRadios = feeAgreement.querySelectorAll(
-            'input[name="feeAgreement"]'
-        );
+if (
+    countryField &&
+    learningModeField &&
+    cohortField &&
+    feeNotice &&
+    feeAmount &&
+    feeAgreement
+) {
 
-        function updateRegistrationFee() {
-            const country = countryField.value.trim().toLowerCase();
+    const agreementRadios = feeAgreement.querySelectorAll(
+        'input[name="feeAgreement"]'
+    );
 
-            if (!country) {
-                feeNotice.style.display = "none";
-                feeAgreement.style.display = "none";
+    function updateRegistrationFee() {
 
-                agreementRadios.forEach(function (radio) {
-                    radio.required = false;
-                    radio.checked = false;
-                });
+        const learningMode = learningModeField.value;
+        const cohort = cohortField.value;
 
+        // Fees apply only to International Online Cohort 13.
+        if (
+            learningMode !== "international_online" ||
+            cohort !== "Cohort 13"
+        ) {
+
+            feeNotice.style.display = "none";
+            feeAgreement.style.display = "none";
+
+            agreementRadios.forEach(function (radio) {
+                radio.required = false;
+                radio.checked = false;
+            });
+
+            return;
+        }
+
+        const country = countryField.value.trim().toLowerCase();
+
+        if (!country) {
+
+            feeNotice.style.display = "none";
+            feeAgreement.style.display = "none";
+
+            agreementRadios.forEach(function (radio) {
+                radio.required = false;
+                radio.checked = false;
+            });
+
+            return;
+        }
+
+        let fee = "USD 5";
+
+        if (country === "liberia") {
+            fee = "LD 1,500";
+        } else if (
+            country === "gambia" ||
+            country === "the gambia"
+        ) {
+            fee = "100 Dalasi (GMD)";
+        }
+
+        feeAmount.textContent = fee;
+
+        feeNotice.style.display = "block";
+        feeAgreement.style.display = "block";
+
+        agreementRadios.forEach(function (radio) {
+            radio.required = true;
+        });
+    }
+
+    countryField.addEventListener("input", updateRegistrationFee);
+    countryField.addEventListener("change", updateRegistrationFee);
+
+    learningModeField.addEventListener("change", updateRegistrationFee);
+    cohortField.addEventListener("change", updateRegistrationFee);
+
+    // Prevent submission when an international Cohort 13
+    // applicant does not agree to the applicable fee.
+    const applicationForm = countryField.closest("form");
+
+    if (applicationForm) {
+
+        applicationForm.addEventListener("submit", function (event) {
+
+            const learningMode = learningModeField.value;
+            const cohort = cohortField.value;
+
+            if (
+                learningMode !== "international_online" ||
+                cohort !== "Cohort 13"
+            ) {
                 return;
             }
 
-            let fee = "USD 5";
+            const selectedAgreement = feeAgreement.querySelector(
+                'input[name="feeAgreement"]:checked'
+            );
 
             if (
-                country === "liberia"
+                selectedAgreement &&
+                selectedAgreement.value === "No"
             ) {
-                fee = "LD 1,500";
-            } else if (
-                country === "gambia" ||
-                country === "the gambia"
-            ) {
-                fee = "100 Dalasi (GMD)";
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                alert(
+                    "You must agree to the applicable registration fee " +
+                    "to proceed with the Cohort 13 application."
+                );
             }
 
-            feeAmount.textContent = fee;
-            feeNotice.style.display = "block";
-            feeAgreement.style.display = "block";
-
-            agreementRadios.forEach(function (radio) {
-                radio.required = true;
-            });
-        }
-
-        countryField.addEventListener("input", updateRegistrationFee);
-        countryField.addEventListener("change", updateRegistrationFee);
-
-        // Do not allow an applicant who selects "No" to submit.
-        const applicationForm = countryField.closest("form");
-
-        if (applicationForm) {
-            applicationForm.addEventListener("submit", function (event) {
-                const selectedAgreement = feeAgreement.querySelector(
-                    'input[name="feeAgreement"]:checked'
-                );
-
-                if (
-                    selectedAgreement &&
-                    selectedAgreement.value === "No"
-                ) {
-                    event.preventDefault();
-                    event.stopImmediatePropagation();
-
-                    alert(
-    "You must agree to the applicable registration fee " +
-    "to proceed with the Cohort 13 application."
-);
-                }
-            }, true);
-        }
-
-        updateRegistrationFee();
+        }, true);
     }
+
+    updateRegistrationFee();
+}
 
     // ======================================================
     // START
