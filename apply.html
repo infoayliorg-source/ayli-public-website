@@ -742,128 +742,187 @@
             </div>
 
 
-            <!-- =================================================
-                 PROGRAM INFORMATION
-            ================================================== -->
+<!-- =================================================
+     PROGRAM INFORMATION
+================================================== -->
 
-            <div class="form-section">
+<div class="form-section">
 
-                <h3 class="form-section-title">
-                    04. Program Information
-                </h3>
+    <h3 class="form-section-title">
+        04. Program Information
+    </h3>
 
+    <div class="form-grid">
 
-                <div class="form-grid">
+        <!-- LEARNING MODE -->
+        <div class="form-group full-width">
 
+            <label for="learningMode">
+                Select Learning Mode
+                <span class="required">*</span>
+            </label>
 
-                    <div class="form-group">
+            <select
+                id="learningMode"
+                name="learning_mode"
+                required
+            >
+                <option value="">Select Learning Mode</option>
+                <option value="international_online">
+                    International Online Learning
+                </option>
+                <option value="liberia_in_person">
+                    Liberia In-Person Learning
+                </option>
+            </select>
 
-                        <label for="program">
-                            Preferred Program
-                            <span class="required">*</span>
-                        </label>
+        </div>
 
-                        <select
-                            id="program"
-                            name="program"
-                            required
-                        >
+        <!-- PREFERRED PROGRAM -->
+        <div class="form-group">
 
-                            <option value="">
-                                Select Program
-                            </option>
+            <label for="program">
+                Preferred Program
+                <span class="required">*</span>
+            </label>
 
-                            <option value="AYLI Leadership School">
-                                AYLI Leadership School
-                            </option>
+            <select
+                id="program"
+                name="program"
+                required
+            >
+                <option value="">Select Program</option>
+                <option value="AYLI Leadership School">
+                    AYLI Leadership School
+                </option>
+            </select>
 
-                        </select>
+        </div>
 
-                    </div>
+        <!-- COHORT -->
+        <div class="form-group">
 
+            <label for="cohort">
+                Preferred Cohort
+                <span class="required">*</span>
+            </label>
 
-                    <div class="form-group">
+            <select
+                id="cohort"
+                name="cohort"
+                required
+            >
+                <option value="">Select Cohort</option>
+                <option value="Cohort 13">Cohort 13</option>
+                <option value="Cohort 1">In-Person Cohort 1</option>
+            </select>
 
-                        <label for="cohort">
-                            Preferred Cohort
-                            <span class="required">*</span>
-                        </label>
+        </div>
 
-                        <select
-                            id="cohort"
-                            name="cohort"
-                            required
-                        >
+        <!-- ACADEMIC PROGRAMME -->
+        <div class="form-group full-width">
 
-                            <option value="">
-                                Select Cohort
-                            </option>
+            <label for="academicProgramme">
+                Academic Programme
+                <span class="required">*</span>
+            </label>
 
-                            <option value="Cohort 12">
-                                Cohort 12
-                            </option>
+            <select
+                id="academicProgramme"
+                name="academic_programme"
+            >
+                <option value="">Select Academic Programme</option>
+                <option value="Certificate in Business Administration">
+                    Certificate in Business Administration
+                </option>
+                <option value="Certificate in Journalism and Mass Communication">
+                    Certificate in Journalism and Mass Communication
+                </option>
+                <option value="Certificate in Project Management">
+                    Certificate in Project Management
+                </option>
+                <option value="Certificate in Proposal Writing and Grant Development">
+                    Certificate in Proposal Writing and Grant Development
+                </option>
+            </select>
 
-                            <option value="Cohort 13">
-    Cohort 13
-</option>
+        </div>
 
-                        </select>
+        <!-- STUDY LOCATION -->
+        <div class="form-group full-width">
 
-                    </div>
+            <label for="studyLocation">
+                Study Location
+            </label>
 
+            <input
+                type="text"
+                id="studyLocation"
+                name="study_location"
+                value="Monrovia, Liberia"
+                readonly
+            >
 
-                    <div class="form-group">
+        </div>
 
-                        <label for="chapter">
-                            Preferred Chapter / Country
-                        </label>
+        <!-- COUNTRY / CHAPTER -->
+        <div class="form-group">
 
-                        <select
-                            id="chapter"
-                            name="chapter"
-                        >
+            <label for="chapter">
+                Preferred Chapter / Country
+            </label>
 
-                            <option value="">
-                                Select Country
-                            </option>
+            <select
+                id="chapter"
+                name="chapter"
+            >
+                <option value="">Select Country</option>
+                <option value="Liberia">Liberia</option>
+                <option value="Gambia">The Gambia</option>
+                <option value="Sierra Leone">Sierra Leone</option>
+                <option value="Ghana">Ghana</option>
+                <option value="Uganda">Uganda</option>
+                <option value="Kenya">Kenya</option>
+                <option value="Tanzania">Tanzania</option>
+                <option value="Other Country">Other Country</option>
+            </select>
 
-                            <option value="Gambia">
-                                The Gambia
-                            </option>
+        </div>
 
-                            <option value="Sierra Leone">
-                                Sierra Leone
-                            </option>
+        <!-- EDUCATIONAL STATUS -->
+        <div class="form-group">
 
-                            <option value="Ghana">
-                                Ghana
-                            </option>
+            <label for="currentEducationalStatus">
+                Current Educational Status
+            </label>
 
-                            <option value="Uganda">
-                                Uganda
-                            </option>
+            <input
+                type="text"
+                id="currentEducationalStatus"
+                name="current_educational_status"
+                placeholder="Enter your current educational status"
+            >
 
-                            <option value="Kenya">
-                                Kenya
-                            </option>
+        </div>
 
-                            <option value="Tanzania">
-                                Tanzania
-                            </option>
+        <!-- PROFESSIONAL EXPERIENCE -->
+        <div class="form-group full-width">
 
-                            <option value="Other Country">
-                                Other Country
-                            </option>
+            <label for="professionalExperience">
+                Professional Experience
+            </label>
 
-                        </select>
+            <textarea
+                id="professionalExperience"
+                name="professional_experience"
+                placeholder="Describe your professional or relevant work experience..."
+            ></textarea>
 
-                    </div>
+        </div>
 
+    </div>
 
-                </div>
-
-            </div>
-
+</div>
 
             <!-- =================================================
                  MOTIVATION
@@ -1404,67 +1463,79 @@
 
                     const application = {
 
-                        application_number:
-                            applicationNumber,
+    application_number:
+        applicationNumber,
 
-                        full_name:
-                            formData.get("full_name"),
+    full_name:
+        formData.get("full_name"),
 
-                        gender:
-                            formData.get("gender"),
+    gender:
+        formData.get("gender"),
 
-                        date_of_birth:
-                            formData.get("date_of_birth"),
+    date_of_birth:
+        formData.get("date_of_birth"),
 
-                        nationality:
-                            formData.get("nationality"),
+    nationality:
+        formData.get("nationality"),
 
-                        country:
-                            formData.get("country"),
+    country:
+        formData.get("country"),
 
-                        city:
-                            formData.get("city"),
+    city:
+        formData.get("city"),
 
-                        phone:
-                            formData.get("phone"),
+    phone:
+        formData.get("phone"),
 
-                        whatsapp:
-                            formData.get("whatsapp") || null,
+    whatsapp:
+        formData.get("whatsapp") || null,
 
-                        email:
-                            formData.get("email"),
+    email:
+        formData.get("email"),
 
-                        education_level:
-                            formData.get("education_level"),
+    education_level:
+        formData.get("education_level"),
 
-                        institution:
-                            formData.get("institution") || null,
+    institution:
+        formData.get("institution") || null,
 
-                        program:
-                            formData.get("program"),
+    program:
+        formData.get("program"),
 
-                        cohort:
-                            formData.get("cohort"),
+    cohort:
+        formData.get("cohort"),
 
-                        chapter:
-                            formData.get("chapter") || null,
+    chapter:
+        formData.get("chapter") || null,
 
-                        motivation:
-                            formData.get("motivation"),
+    learning_mode:
+        formData.get("learning_mode"),
 
-                        leadership_experience:
-                            formData.get(
-                                "leadership_experience"
-                            ) || null,
+    study_location:
+        formData.get("study_location") || null,
 
-                        goals:
-                            formData.get("goals") || null,
+    academic_programme:
+        formData.get("academic_programme") || null,
 
-                        status:
-                            "Pending"
+    current_educational_status:
+        formData.get("current_educational_status") || null,
 
-                    };
+    professional_experience:
+        formData.get("professional_experience") || null,
 
+    motivation:
+        formData.get("motivation"),
+
+    leadership_experience:
+        formData.get("leadership_experience") || null,
+
+    goals:
+        formData.get("goals") || null,
+
+    status:
+        "Pending"
+
+};
 
                     // --------------------------------------
                     // INSERT INTO SUPABASE
@@ -1660,7 +1731,78 @@
     // ======================================================
     // START
     // ======================================================
+// =================================================
+// LEARNING MODE FORM CONTROLS
+// =================================================
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const learningMode = document.getElementById("learningMode");
+    const cohort = document.getElementById("cohort");
+    const academicProgramme = document.getElementById("academicProgramme");
+    const studyLocation = document.getElementById("studyLocation");
+
+    if (!learningMode || !cohort || !academicProgramme || !studyLocation) {
+        console.error("Learning mode form fields not found.");
+        return;
+    }
+
+    function updateLearningModeFields() {
+
+        const selectedMode = learningMode.value;
+
+        if (selectedMode === "international_online") {
+
+            cohort.innerHTML = `
+                <option value="">Select Cohort</option>
+                <option value="Cohort 13">Cohort 13</option>
+            `;
+
+            academicProgramme.value = "";
+            academicProgramme.disabled = true;
+            academicProgramme.required = false;
+            academicProgramme.closest(".form-group").style.display = "none";
+
+            studyLocation.value = "International Online";
+
+            studyLocation.closest(".form-group").style.display = "none";
+
+        } else if (selectedMode === "liberia_in_person") {
+
+            cohort.innerHTML = `
+                <option value="">Select Cohort</option>
+                <option value="Cohort 1">In-Person Cohort 1</option>
+            `;
+
+            academicProgramme.disabled = false;
+            academicProgramme.required = true;
+            academicProgramme.closest(".form-group").style.display = "";
+
+            studyLocation.value = "Monrovia, Liberia";
+
+            studyLocation.closest(".form-group").style.display = "";
+
+        } else {
+
+            cohort.innerHTML = `
+                <option value="">Select Cohort</option>
+            `;
+
+            academicProgramme.value = "";
+            academicProgramme.disabled = true;
+            academicProgramme.required = false;
+            academicProgramme.closest(".form-group").style.display = "none";
+
+            studyLocation.value = "";
+            studyLocation.closest(".form-group").style.display = "none";
+        }
+    }
+
+    learningMode.addEventListener("change", updateLearningModeFields);
+
+    updateLearningModeFields();
+
+});
     initializeApplication();
 
 </script>
