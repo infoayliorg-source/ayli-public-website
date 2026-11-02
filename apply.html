@@ -501,35 +501,6 @@
         <option value="Other">
     </datalist>
 
-    <div id="registrationFeeNotice" style="display: none; margin-top: 12px; padding: 12px; border: 1px solid #ddd; border-radius: 6px;">
-        <strong>Registration Fee Notice</strong>
-        <p>
-            If you are selected for admission to AYLI Cohort 13,
-            you will be required to pay the applicable country-specific
-            registration fee to confirm your participation.
-        </p>
-        <p>
-            <strong>Applicable registration fee:</strong>
-            <span id="registrationFeeAmount"></span>
-        </p>
-    </div>
-
-    <div id="registrationAgreement" style="display: none; margin-top: 12px;">
-        <p>
-            Do you agree to pay the applicable registration fee
-            if you are selected for admission?
-            <span class="required">*</span>
-        </p>
-
-        <label>
-            <input
-                type="radio"
-                name="feeAgreement"
-                value="Yes"
-                required
-            >
-            Yes, I agree.
-        </label>
 
         <label style="margin-left: 12px;">
             <input
@@ -1048,22 +1019,61 @@
 
 
             <!-- =================================================
-                 SUBMIT
-            ================================================== -->
+     REGISTRATION FEE NOTICE AND AGREEMENT
+================================================== -->
 
-            <div class="submit-area">
+<div id="registrationFeeNotice" style="display: none; margin-top: 12px; padding: 12px; border: 1px solid #ddd; border-radius: 6px;">
 
-                <button
-                    type="submit"
-                    id="submitButton"
-                    class="submit-btn"
-                >
+    <strong>Registration Fee Notice</strong>
 
-                    Submit Application
+    <p>
+        If you are selected for admission to AYLI Cohort 13,
+        you will be required to pay the applicable country-specific
+        registration fee to confirm your participation.
+    </p>
 
-                </button>
+    <p>
+        <strong>Applicable registration fee:</strong>
+        <span id="registrationFeeAmount"></span>
+    </p>
 
-            </div>
+</div>
+
+<div id="registrationAgreement" style="display: none; margin-top: 12px;">
+
+    <p>
+        Do you agree to pay the applicable registration fee
+        if you are selected for admission?
+        <span class="required">*</span>
+    </p>
+
+    <label>
+        <input type="radio" name="feeAgreement" value="Yes" required>
+        Yes, I agree.
+    </label>
+
+    <label style="margin-left: 12px;">
+        <input type="radio" name="feeAgreement" value="No" required>
+        No, I do not agree.
+    </label>
+
+</div>
+
+<!-- =================================================
+     SUBMIT
+================================================== -->
+
+<div class="submit-area">
+
+    <button
+        type="submit"
+        id="submitButton"
+        class="submit-btn"
+    >
+        Submit Application
+    </button>
+
+</div>
 
 
         </form>
