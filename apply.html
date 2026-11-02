@@ -1514,30 +1514,26 @@
                     // INSERT INTO SUPABASE
                     // --------------------------------------
 
-                    const {
-                        data,
-                        error
-                    } =
-                        await applicationSupabase
-                            .from("applications")
-                            .insert([
-                                application
-                            ])
-                            .select()
-                            .single();
+                   const {
+    error
+} =
+    await applicationSupabase
+        .from("applications")
+        .insert([
+            application
+        ]);
 
 
-                    if (error) {
+if (error) {
 
-                        console.error(
-                            "Supabase application error:",
-                            error
-                        );
+    console.error(
+        "Supabase application error:",
+        error
+    );
 
+    throw error;
 
-                        throw error;
-
-                    }
+}
 
 
                     // --------------------------------------
@@ -1557,7 +1553,7 @@
                         "Your Application Number is:<br>" +
 
                         "<strong style='font-size:20px;'>" +
-                        data.application_number +
+                        applicationNumber +
                         "</strong>" +
 
                         "<br><br>" +
@@ -1581,10 +1577,9 @@
                     // --------------------------------------
 
                     console.log(
-                        "AYLI Application submitted:",
-                        data
-                    );
-
+    "AYLI Application submitted:",
+    applicationNumber
+);
                 }
 
                 catch (error) {
