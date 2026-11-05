@@ -165,16 +165,42 @@ if (!error && data) {
     tr.appendChild(photoCell);
 
     // Other student information
-    [
-        student.ayli_id ?? "",
-        student.student_name ?? "",
-        student.chapter ?? "",
-        Number(student.provisional_average).toFixed(2)
-    ].forEach(value => {
-        const td = document.createElement("td");
-        td.textContent = value;
-        tr.appendChild(td);
-    });
+   // Rank
+const rankCell = document.createElement("td");
+rankCell.textContent = String(index + 1);
+tr.appendChild(rankCell);
+
+// Photograph
+const photoCell = document.createElement("td");
+const photo = document.createElement("img");
+
+photo.className = "student-photo";
+photo.alt = student.student_name || "AYLI Honor Student";
+
+if (student.photo_url) {
+    photo.src = student.photo_url;
+    photo.onerror = function () {
+        photo.style.display = "none";
+        photoCell.textContent = "No photo";
+    };
+} else {
+    photoCell.textContent = "No photo";
+}
+
+photoCell.appendChild(photo);
+tr.appendChild(photoCell);
+
+// Student information
+[
+    student.ayli_id ?? "",
+    student.student_name ?? "",
+    student.chapter ?? "",
+    Number(student.provisional_average).toFixed(2)
+].forEach(value => {
+    const td = document.createElement("td");
+    td.textContent = value;
+    tr.appendChild(td);
+});
 
     body.appendChild(tr);
 });
