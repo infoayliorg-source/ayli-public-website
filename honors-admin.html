@@ -162,6 +162,39 @@
   </p>
 </div>
 
+        <div class="panel">
+  <h3>Upload Student Photograph</h3>
+
+  <p class="note">
+    Select a student and upload their official photograph.
+  </p>
+
+  <label for="photoStudentId">Select Student</label>
+  <select id="photoStudentId"
+    style="width:100%;max-width:420px;padding:11px;border:1px solid #cbd5e1;border-radius:6px">
+    <option value="">Choose a student...</option>
+  </select>
+
+  <label for="studentPhoto">Choose Photograph</label>
+  <input
+    type="file"
+    id="studentPhoto"
+    accept="image/jpeg,image/png,image/webp"
+  >
+
+  <img
+    id="photoPreview"
+    class="hidden"
+    alt="Student photograph preview"
+    style="width:120px;height:120px;object-fit:cover;border-radius:50%;margin-top:12px"
+  >
+
+  <button type="button" id="uploadPhotoButton">
+    Upload Photograph
+  </button>
+
+  <div id="photoMessage" role="status"></div>
+</div>
         <label for="search">Search by name, AYLI ID, or chapter</label>
         <input id="search" type="search" placeholder="Type to search...">
         <div class="table-wrap" style="margin-top:16px">
@@ -212,7 +245,21 @@
     const resultsBody = document.getElementById("resultsBody");
 
     let records = [];
+function populatePhotoStudentOptions() {
+  const select = document.getElementById("photoStudentId");
 
+  select.innerHTML = '<option value="">Choose a student...</option>';
+
+  records.forEach(student => {
+    const option = document.createElement("option");
+
+    option.value = student.ayli_id;
+    option.textContent =
+      `${student.ayli_id} — ${student.student_name}`;
+
+    select.appendChild(option);
+  });
+}
     function showMessage(element, message, isError = false) {
       element.textContent = message;
       element.className = isError ? "error" : "success";
@@ -294,6 +341,7 @@
       }
 
       records = data ?? [];
+      populatePhotoStudentOptions();
 
       const countStatus = status =>
         records.filter(row => row.honors_status === status).length;
@@ -461,7 +509,103 @@
     document.getElementById("unpublishBtn").addEventListener(
       "click", () => performHonorsAction("unpublished")
     );
+const photoInput = document.getElementById("studentPhoto");
+const photoPreview = document.getElementById("photoPreview");
+const photoMessage = document.getElementById("photoMessage");
+const uploadPhotoButton = document.getElementById("uploadPhotoButton");
 
+// Preview selected photograph
+photoInput.addEventListener("change", () => {
+  const file = photoInput.files[0];
+
+  photoPreview.classList.add("hidden");
+
+  if (!file) return;
+
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+    alert("Please select a JPG, PNG, or WebP image.");
+    photoInput.value = "";
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    alert("Photograph must not exceed 5 MB.");
+    photoInput.value = "";
+    return;
+  }
+
+  photoPreview.src = URL.createObjectURL(file);
+  photoPreview.classList.remove("hidden");
+});
+
+// Upload photograph
+uploadPhotoButton.addEventListener("click", async () => {
+  const ayliId = document.getElementById("photoStudentId").value;
+  const file = photoInput.files[0];
+
+  if (!ayliId || !file) {
+    alert("Select a student and photograph first.");
+    return;
+  }
+
+  const { data: { user }, error: userError } =
+    await db.auth.getUser();
+
+  if (userError || user?.email?.toLowerCase() !== "infoayli.org@gmail.com") {
+    alert("Administrator access required.");
+    return;
+  }
+
+  const extension = {
+    "image/jpeg": "jpg",
+    "image/png": "png",
+    "image/webp": "webp"
+  }[file.type];
+
+  const path =
+    `cohort12-honors/${ayliId}/${Date.now()}.${extension}`;
+
+  uploadPhotoButton.disabled = true;
+  photoMessage.textContent = "Uploading photograph...";
+
+  try {
+    const { error: uploadError } = await db.storage
+      .from("website-media")
+      .upload(path, file, {
+        contentType: file.type,
+        upsert: false
+      });
+
+    if (uploadError) throw uploadError;
+
+    const { data } = db.storage
+      .from("website-media")
+      .getPublicUrl(path);
+
+    const { error: saveError } = await db.rpc(
+      "admin_update_student_photo",
+      {
+        p_ayli_id: ayliId,
+        p_photo_url: data.publicUrl
+      }
+    );
+
+    if (saveError) throw saveError;
+
+    photoMessage.textContent =
+      "Photograph successfully uploaded for " + ayliId;
+
+    photoInput.value = "";
+    photoPreview.classList.add("hidden");
+
+    await loadDashboard();
+
+  } catch (error) {
+    photoMessage.textContent = "Error: " + error.message;
+  } finally {
+    uploadPhotoButton.disabled = false;
+  }
+});
     // Restore a previously authenticated administrator session.
     const { data: { session } } = await db.auth.getSession();
 
