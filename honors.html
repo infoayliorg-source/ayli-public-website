@@ -38,6 +38,26 @@
       text-align: left;
     }
     th { background: #eef4fc; }
+    .student-photo {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e0eaff;
+    display: block;
+}
+
+.photo-placeholder {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #eef4fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #123b70;
+    font-size: 12px;
+}
     .status { color: #187044; font-weight: bold; }
     #message { padding: 12px 0; }
     footer { text-align: center; padding: 25px; color: #52657e; }
@@ -64,15 +84,16 @@
       <div id="message" role="status">Loading published records...</div>
       <div class="table-wrap">
         <table>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>AYLI ID</th>
-              <th>Student Name</th>
-              <th>Chapter</th>
-              <th>Average</th>
-            </tr>
-          </thead>
+         <thead>
+    <tr>
+        <th>Rank</th>
+        <th>Photograph</th>
+        <th>AYLI ID</th>
+        <th>Student Name</th>
+        <th>Chapter</th>
+        <th>Average</th>
+    </tr>
+</thead>
           <tbody id="honorsBody"></tbody>
         </table>
       </div>
@@ -122,23 +143,41 @@ if (!error && data) {
 
       message.textContent = `${data.length} published honors record(s).`;
 
-      data.forEach((student, index) => {
-        const tr = document.createElement("tr");
+    data.forEach((student, index) => {
+    const tr = document.createElement("tr");
 
-        [
-          String(index + 1),
-          student.ayli_id ?? "",
-          student.student_name ?? "",
-          student.chapter ?? "",
-          Number(student.provisional_average).toFixed(2)
-        ].forEach(value => {
-          const td = document.createElement("td");
-          td.textContent = value;
-          tr.appendChild(td);
-        });
+    // Rank
+    const rankCell = document.createElement("td");
+    rankCell.textContent = String(index + 1);
+    tr.appendChild(rankCell);
 
-        body.appendChild(tr);
-      });
+    // Student photograph
+    const photoCell = document.createElement("td");
+    const photo = document.createElement("img");
+
+    photo.className = "student-photo";
+    photo.alt = student.student_name || "AYLI Honor Student";
+
+    // Temporary placeholder until photograph URLs are added
+    photo.src = "images/default-student.png";
+
+    photoCell.appendChild(photo);
+    tr.appendChild(photoCell);
+
+    // Other student information
+    [
+        student.ayli_id ?? "",
+        student.student_name ?? "",
+        student.chapter ?? "",
+        Number(student.provisional_average).toFixed(2)
+    ].forEach(value => {
+        const td = document.createElement("td");
+        td.textContent = value;
+        tr.appendChild(td);
+    });
+
+    body.appendChild(tr);
+});
     }
 
     loadHonors();
