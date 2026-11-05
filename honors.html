@@ -146,49 +146,33 @@ if (!error && data) {
     data.forEach((student, index) => {
     const tr = document.createElement("tr");
 
-    // Rank
-    const rankCell = document.createElement("td");
-    rankCell.textContent = String(index + 1);
-    tr.appendChild(rankCell);
-
-    // Student photograph
-    const photoCell = document.createElement("td");
-    const photo = document.createElement("img");
-
-    photo.className = "student-photo";
-    photo.alt = student.student_name || "AYLI Honor Student";
-
-    // Temporary placeholder until photograph URLs are added
-    photo.src = "images/default-student.png";
-
-    photoCell.appendChild(photo);
-    tr.appendChild(photoCell);
-
-    // Other student information
    // Rank
 const rankCell = document.createElement("td");
 rankCell.textContent = String(index + 1);
 tr.appendChild(rankCell);
 
-// Photograph
+// Student Photograph
 const photoCell = document.createElement("td");
-const photo = document.createElement("img");
-
-photo.className = "student-photo";
-photo.alt = student.student_name || "AYLI Honor Student";
 
 if (student.photo_url) {
+    const photo = document.createElement("img");
+
+    photo.className = "student-photo";
+    photo.alt = student.student_name || "AYLI Honor Student";
     photo.src = student.photo_url;
+
     photo.onerror = function () {
-        photo.style.display = "none";
         photoCell.textContent = "No photo";
     };
+
+    photoCell.appendChild(photo);
 } else {
     photoCell.textContent = "No photo";
 }
 
-photoCell.appendChild(photo);
 tr.appendChild(photoCell);
+
+// Other student information
 
 // Student information
 [
